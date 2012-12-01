@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <PreferenceCategory
+        android:key="preferencesCategoryCredentials"
+        android:title="CloudApp Credentials" >
+
+        <EditTextPreference
+            android:key="email"
+            android:summary="Your ClouApp email account"
+            android:title="Email" />
+
+        <EditTextPreference
+            android:inputType="textPassword"
+            android:key="password"
+            android:summary="Your ClouApp password"
+            android:title="Password" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="preferencesCategoryFilelisting"
+        android:title="Files listing" >
+
+        <ListPreference
+            android:defaultValue="20"
+            android:entries="@array/numberOfFiles"
+            android:entryValues="@array/numberOfFiles"
+            android:key="files_per_request"
+            android:title="Number of files to display" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="refresh_auto"
+            android:summaryOff="Check to active the automatic refresh of the list of your files"
+            android:summaryOn="Refresh the list of files when you open / go back to the app. Uncheck to desactivate."
+            android:title="Refresh automatic" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="preferencesCategoryTransfertDownload"
+        android:title="Download Transfert" >
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="download_notification_show"
+            android:title="Show notification and progress" />
+
+        <ListPreference
+            android:defaultValue="0"
+            android:dependency="download_notification_show"
+            android:dialogTitle="Click action"
+            android:entries="@array/notificationDownloadAction"
+            android:entryValues="@array/notificationDownloadActionValue"
+            android:key="download_notification_action"
+            android:title="Notification action" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="preferencesCategoryTransfertUpload"
+        android:title="Upload Transfert" >
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="upload_notification_show"
+            android:title="Show notification and progress" />
+
+        <ListPreference
+            android:defaultValue="0"
+            android:dependency="upload_notification_show"
+            android:dialogTitle="Click action"
+            android:entries="@array/notificationUploadAction"
+            android:entryValues="@array/notificationUploadActionValue"
+            android:key="upload_notification_action"
+            android:title="Notification action" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:key="preferencesCategoryFileSettings"
+        android:title="Saving files" >
+
+        <ListPreference
+            android:dialogTitle="Choose saving directory"
+            android:entries="@array/savingType"
+            android:entryValues="@array/savingTypeValues"
+            android:key="saving_type"
+            android:title="Saving file directory" android:defaultValue="0"/>
+
+        <EditTextPreference
+            android:enabled="false"
+            android:key="directory_pictures"
+            android:title="Images Directory" />
+
+        <EditTextPreference
+            android:enabled="false"
+            android:key="directory_musics"
+            android:title="Audio Directory" />
+
+        <EditTextPreference
+            android:enabled="false"
+            android:key="directory_movies"
+            android:title="Video Directory" />
+
+        <EditTextPreference
+            android:enabled="false"
+            android:key="directory_texts"
+            android:title="Text Directory" />
+
+        <EditTextPreference
+            android:enabled="false"
+            android:key="directory_unknown"
+            android:title="Other files Directory" />
+    </PreferenceCategory>
+    <PreferenceCategory android:key="preferencesCategoryAdvancedSettings" android:title="Advanced Settings">
+        <Preference android:key="clear_cache" android:title="Clear cache"/>
+    </PreferenceCategory>
+
+</PreferenceScreen>

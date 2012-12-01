@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">AndroCloud</string>
+
+    <string-array name="numberOfFiles">
+        <item>10</item>
+        <item>15</item>
+        <item>20</item>
+        <item>25</item>
+        <item>30</item>
+    </string-array>
+    <string-array name="savingType">
+        <item>Default folders</item>
+        <item>All in download folder</item>
+        <item>Custom</item>
+    </string-array>
+    <string-array name="savingTypeValues">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+    </string-array>
+    <string-array name="notificationDownloadAction">
+        <item>Open file</item>
+    </string-array>
+    <string-array name="notificationDownloadActionValue">
+        <item>0</item>
+    </string-array>
+    <string-array name="notificationUploadAction">
+        <item>Copy link to clipboard</item>
+        <item>Copy direct link to clipboard</item>
+        <item>Open link in web browser</item>
+        <item>Open direct link in web browser</item>
+    </string-array>
+    <string-array name="notificationUploadActionValue">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+</resources>

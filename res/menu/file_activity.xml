@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    
+    <item android:id="@+id/menuItemView" 
+          android:title="Save" 
+          android:showAsAction="ifRoom"
+          android:orderInCategory="1" 
+          android:icon="@drawable/ic_menu_view" />  
+    <item android:id="@+id/menuItemSave" 
+          android:title="Save" 
+          android:showAsAction="ifRoom"
+          android:orderInCategory="2" 
+          android:icon="@drawable/ic_menu_save" />    
+    <item android:id="@+id/menuItemShare"
+          android:title="Share"
+          android:showAsAction="ifRoom"
+          android:orderInCategory="3"
+          android:icon="@drawable/ic_menu_link" />   
+    <item android:id="@+id/menuItemRename" 
+          android:title="Rename" 
+          android:showAsAction="ifRoom"
+          android:orderInCategory="4" 
+          android:icon="@drawable/ic_menu_edit" />
+    <item android:id="@+id/menuItemDelete" 
+          android:title="delete" 
+          android:showAsAction="ifRoom"
+          android:orderInCategory="5" 
+          android:icon="@drawable/ic_menu_delete" />
+</menu>

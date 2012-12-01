@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+        
+    <item android:id="@+id/multiItemSave" 
+          android:title="Save" 
+          android:showAsAction="ifRoom" 
+          android:icon="@drawable/ic_menu_save" />    
+    <item android:id="@+id/multiItemDelete" 
+          android:title="delete" 
+          android:showAsAction="ifRoom" 
+          android:icon="@drawable/ic_menu_delete" />                                                     
+</menu>

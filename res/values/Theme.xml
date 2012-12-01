@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Styled" parent="Theme.Sherlock.Light">
+        <item name="actionBarStyle">@style/Widget.Styled.ActionBar</item>
+        <item name="android:actionBarStyle">@style/Widget.Styled.ActionBar</item>
+    </style>
+
+    <style name="Widget.Styled.ActionBar" parent="Widget.Sherlock.Light.ActionBar.Solid.Inverse">
+        <item name="background">#000000</item>
+        <item name="android:background">#000000</item>
+        <item name="backgroundSplit">#000000</item>
+        <item name="android:backgroundSplit">#000000</item>
+    </style>
+
+</resources>
