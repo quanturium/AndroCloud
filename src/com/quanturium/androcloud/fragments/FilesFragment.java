@@ -462,7 +462,8 @@ public class FilesFragment extends Fragment implements OnItemClickListener, Mult
 
 							if (page == 0)
 							{
-								FilesFragment.this.files.remove(FilesFragment.this.files.size() - 1);
+								if(FilesFragment.this.files.size() > 0)
+									FilesFragment.this.files.remove(FilesFragment.this.files.size() - 1);
 
 								OUTERMOST: for (CloudAppItem item : FilesFragment.this.files) // We add only the new items
 								{
