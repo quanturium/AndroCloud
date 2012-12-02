@@ -7,7 +7,6 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
@@ -83,7 +82,7 @@ public class TransfertNotification
 			if (android.os.Build.VERSION.SDK_INT >= 14)
 			{
 				notification.largeIcon = BitmapFactory.decodeResource(transfertTask.context.getResources(), R.drawable.ic_stat_transfert_finished);
-			}			
+			}
 		}
 
 		notificationManager.notify(this.notificationId, notification);
@@ -116,23 +115,23 @@ public class TransfertNotification
 
 			builder.setTicker(text_ticker);
 			builder.setSmallIcon(icon_ticker);
-			
+
 			Log.i("notifSize", context.getResources().getDimensionPixelSize(android.R.dimen.notification_large_icon_width) + ";" + context.getResources().getDimensionPixelSize(android.R.dimen.notification_large_icon_height));
-			
-//			builder.setLargeIcon(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), icon_uploading), context.getResources().getDimensionPixelSize(android.R.dimen.notification_large_icon_width), context.getResources().getDimensionPixelSize(android.R.dimen.notification_large_icon_height), false));
-			
+
+			// builder.setLargeIcon(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), icon_uploading), context.getResources().getDimensionPixelSize(android.R.dimen.notification_large_icon_width), context.getResources().getDimensionPixelSize(android.R.dimen.notification_large_icon_height), false));
+
 			if (android.os.Build.VERSION.SDK_INT >= 14)
 			{
 				builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), icon_uploading));
 			}
-			
+
 			builder.setOngoing(true);
 			builder.setAutoCancel(false);
 			builder.setOnlyAlertOnce(true);
 			builder.setContent(contentView);
 
-			Notification notification = builder.getNotification(); 
-			
+			Notification notification = builder.getNotification();
+
 			return notification;
 		}
 	}
@@ -168,33 +167,32 @@ public class TransfertNotification
 
 									intentActionValue1 = item.getUrl();
 
-								break;
+									break;
 
 								case 1:
 
 									intentActionValue1 = item.getRemoteUrl();
 
-								break;
+									break;
 
 								case 2:
 
 									intentActionValue1 = item.getUrl();
 
-								break;
+									break;
 
 								case 3:
-									
+
 									intentActionValue1 = item.getRemoteUrl();
 
-								break;
+									break;
 							}
-						}
-						catch (CloudAppException e)
+						} catch (CloudAppException e)
 						{
 							e.printStackTrace();
 						}
 
-					break;
+						break;
 
 					case 1:
 
@@ -213,10 +211,10 @@ public class TransfertNotification
 								intentActionValue1 = uri;
 								intentActionValue2 = mimeType;
 
-							break;
+								break;
 						}
 
-					break;
+						break;
 
 				}
 

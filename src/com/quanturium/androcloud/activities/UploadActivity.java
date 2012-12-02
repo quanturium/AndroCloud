@@ -1,8 +1,9 @@
-package com.quanturium.androcloud;
+package com.quanturium.androcloud.activities;
 
 import java.io.File;
 import java.util.ArrayList;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -10,12 +11,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockActivity;
 import com.quanturium.androcloud.tools.Tools;
 import com.quanturium.androcloud.transfert.TransfertTask;
 import com.quanturium.androcloud.transfert.upload.UploadTask;
 
-public class UploadActivity extends SherlockActivity
+public class UploadActivity extends Activity
 {
 	/** Called when the activity is first created. */
 	@Override

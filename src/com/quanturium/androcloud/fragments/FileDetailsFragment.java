@@ -1,4 +1,4 @@
-package com.quanturium.androcloud;
+package com.quanturium.androcloud.fragments;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
@@ -29,6 +30,7 @@ import android.util.Log;
 import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,13 +40,13 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.cloudapp.api.CloudApp;
 import com.cloudapp.api.CloudAppException;
 import com.cloudapp.api.model.CloudAppItem;
 import com.cloudapp.api.model.CloudAppItem.Type;
 import com.cloudapp.impl.CloudAppImpl;
 import com.cloudapp.impl.model.CloudAppItemImpl;
+import com.quanturium.androcloud.R;
 import com.quanturium.androcloud.listener.FilesDetailsFragmentListener;
 import com.quanturium.androcloud.tools.Cache;
 import com.quanturium.androcloud.tools.Constant;
@@ -53,7 +55,7 @@ import com.quanturium.androcloud.tools.Tools;
 import com.quanturium.androcloud.transfert.TransfertTask;
 import com.quanturium.androcloud.transfert.download.DownloadTask;
 
-public class FileDetailsFragment extends SherlockFragment
+public class FileDetailsFragment extends Fragment
 {
 	private Handler							handler				= new Handler();
 	private Activity						activity;
@@ -134,7 +136,7 @@ public class FileDetailsFragment extends SherlockFragment
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item)
+	public boolean onOptionsItemSelected(MenuItem item)
 	{
 		switch (item.getItemId())
 		{
@@ -242,7 +244,7 @@ public class FileDetailsFragment extends SherlockFragment
 	}
 	
 	@Override
-	public void onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu, com.actionbarsherlock.view.MenuInflater inflater)
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
 		inflater.inflate(R.menu.file_activity, menu);
 

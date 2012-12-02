@@ -1,4 +1,4 @@
-package com.quanturium.androcloud;
+package com.quanturium.androcloud.activities;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -8,14 +8,15 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockPreferenceActivity;
+import com.quanturium.androcloud.R;
 import com.quanturium.androcloud.tools.Cache;
 import com.quanturium.androcloud.tools.Prefs;
 
-public class PreferencesActivity extends SherlockPreferenceActivity implements OnSharedPreferenceChangeListener
+public class PreferencesActivity extends PreferenceActivity implements OnSharedPreferenceChangeListener
 {
 
 	@Override

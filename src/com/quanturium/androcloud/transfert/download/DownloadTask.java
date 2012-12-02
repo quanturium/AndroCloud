@@ -14,7 +14,7 @@ import android.util.Log;
 
 import com.cloudapp.api.CloudAppException;
 import com.cloudapp.api.model.CloudAppItem;
-import com.quanturium.androcloud.FileDetailsFragment;
+import com.quanturium.androcloud.fragments.FileDetailsFragment;
 import com.quanturium.androcloud.tools.Constant;
 import com.quanturium.androcloud.tools.Prefs;
 import com.quanturium.androcloud.transfert.TransfertTask;

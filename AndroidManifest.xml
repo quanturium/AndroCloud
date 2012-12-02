@@ -15,34 +15,34 @@
     <application
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/Theme.Styled" >
+        android:theme="@android:style/Theme.Holo.Light" >
         <activity
+            android:name=".activities.FilesActivity"
             android:label="@string/app_name"
-            android:name="com.quanturium.androcloud.FilesActivity"
             android:windowSoftInputMode="stateHidden" >
-            <intent-filter >
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="com.quanturium.androcloud.FileDetailsActivity"
+            android:name=".activities.FileDetailsActivity"
             android:uiOptions="splitActionBarWhenNarrow" >
         </activity>
-        <activity android:name="com.quanturium.androcloud.PreferencesActivity" >
+        <activity android:name=".activities.PreferencesActivity" >
         </activity>
         <activity
-            android:name="com.quanturium.androcloud.UploadActivity"
+            android:name=".activities.UploadActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" >
-            <intent-filter >
+            <intent-filter>
                 <action android:name="android.intent.action.SEND" />
 
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data android:mimeType="*/*" />
             </intent-filter>
-            <intent-filter >
+            <intent-filter>
                 <action android:name="android.intent.action.SEND_MULTIPLE" />
 
                 <category android:name="android.intent.category.DEFAULT" />
@@ -52,8 +52,8 @@
         </activity>
 
         <receiver
-            android:exported="false"
-            android:name="com.quanturium.androcloud.transfert.TransfertEventsReceiver" >
+            android:name=".transfert.TransfertEventsReceiver"
+            android:exported="false" >
         </receiver>
     </application>
 

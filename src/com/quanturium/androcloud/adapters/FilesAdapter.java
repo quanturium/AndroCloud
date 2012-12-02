@@ -200,7 +200,7 @@ public class FilesAdapter extends BaseAdapter implements Filterable
 
 				if (displayItems.get(position).isChecked())
 				{
-					itemViewHolder.layout.setBackgroundResource(R.color.abs__holo_blue_light);
+					itemViewHolder.layout.setBackgroundResource(android.R.color.holo_blue_light);
 					itemViewHolder.checkbox.setChecked(true);
 				}
 				else

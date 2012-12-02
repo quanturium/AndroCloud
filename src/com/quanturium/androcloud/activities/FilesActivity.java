@@ -1,19 +1,22 @@
-package com.quanturium.androcloud;
+package com.quanturium.androcloud.activities;
 
 import org.json.JSONObject;
 
+import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.quanturium.androcloud.R;
+import com.quanturium.androcloud.fragments.FileDetailsFragment;
+import com.quanturium.androcloud.fragments.FilesFragment;
 import com.quanturium.androcloud.listener.FilesDetailsFragmentListener;
 import com.quanturium.androcloud.listener.FilesFragmentListener;
 import com.quanturium.androcloud.tools.Constant;
 
-public class FilesActivity extends SherlockFragmentActivity implements FilesFragmentListener, FilesDetailsFragmentListener
+public class FilesActivity extends Activity implements FilesFragmentListener, FilesDetailsFragmentListener
 {
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -43,7 +46,7 @@ public class FilesActivity extends SherlockFragmentActivity implements FilesFrag
 
 			newFragment.setArguments(a);
 
-			FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+			FragmentTransaction transaction = getFragmentManager().beginTransaction();
 			transaction.replace(R.id.fileDetailsFragment, newFragment);
 			transaction.addToBackStack(null);
 
@@ -96,19 +99,19 @@ public class FilesActivity extends SherlockFragmentActivity implements FilesFrag
 	@Override
 	public void onFileDeleted(Message message)
 	{
-		((FilesFragment) getSupportFragmentManager().findFragmentById(R.id.filesFragment)).getHandler().sendMessage(Message.obtain(message));		
+		((FilesFragment) getFragmentManager().findFragmentById(R.id.filesFragment)).getHandler().sendMessage(Message.obtain(message));		
 	}
 
 	@Override
 	public void onFileRenamed(Message message)
 	{
-		((FilesFragment) getSupportFragmentManager().findFragmentById(R.id.filesFragment)).getHandler().sendMessage(Message.obtain(message));
+		((FilesFragment) getFragmentManager().findFragmentById(R.id.filesFragment)).getHandler().sendMessage(Message.obtain(message));
 	}
 
 	@Override
 	public void onStartLoading(int targetRes)
 	{
-		FilesFragment filesFragment = (FilesFragment) getSupportFragmentManager().findFragmentById(R.id.filesFragment);
+		FilesFragment filesFragment = (FilesFragment) getFragmentManager().findFragmentById(R.id.filesFragment);
 
 		filesFragment.currentlyLoading = true;
 		filesFragment.showProgressIcon(true);
@@ -117,7 +120,7 @@ public class FilesActivity extends SherlockFragmentActivity implements FilesFrag
 	@Override
 	public void onStopLoading()
 	{
-		FilesFragment filesFragment = (FilesFragment) getSupportFragmentManager().findFragmentById(R.id.filesFragment);
+		FilesFragment filesFragment = (FilesFragment) getFragmentManager().findFragmentById(R.id.filesFragment);
 
 		filesFragment.currentlyLoading = false;
 		filesFragment.showProgressIcon(false);

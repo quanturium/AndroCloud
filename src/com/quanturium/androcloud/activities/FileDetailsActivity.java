@@ -1,4 +1,4 @@
-package com.quanturium.androcloud;
+package com.quanturium.androcloud.activities;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,11 +7,12 @@ import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
 
-import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.quanturium.androcloud.R;
+import com.quanturium.androcloud.fragments.FileDetailsFragment;
 import com.quanturium.androcloud.listener.FilesDetailsFragmentListener;
 import com.quanturium.androcloud.tools.Constant;
 
-public class FileDetailsActivity extends SherlockFragmentActivity implements FilesDetailsFragmentListener
+public class FileDetailsActivity extends Activity implements FilesDetailsFragmentListener
 {
 	private Bundle	resultBundle	= new Bundle();
 
@@ -43,7 +44,7 @@ public class FileDetailsActivity extends SherlockFragmentActivity implements Fil
 			// During initial setup, plug in the details fragment.
 			FileDetailsFragment details = new FileDetailsFragment();
 			details.setArguments(getIntent().getExtras());
-			getSupportFragmentManager().beginTransaction().add(R.id.fileDetailsFragment, details).commit();
+			getFragmentManager().beginTransaction().add(R.id.fileDetailsFragment, details).commit();
 		}
 		else
 		{
@@ -88,7 +89,7 @@ public class FileDetailsActivity extends SherlockFragmentActivity implements Fil
 	@Override
 	public void onStartLoading(int targetRes)
 	{
-		FileDetailsFragment fileDetailsFragment = (FileDetailsFragment) getSupportFragmentManager().findFragmentById(R.id.fileDetailsFragment);
+		FileDetailsFragment fileDetailsFragment = (FileDetailsFragment) getFragmentManager().findFragmentById(R.id.fileDetailsFragment);
 		try
 		{
 			fileDetailsFragment.currentlyLoading = true;
@@ -104,7 +105,7 @@ public class FileDetailsActivity extends SherlockFragmentActivity implements Fil
 	@Override
 	public void onStopLoading()
 	{
-		FileDetailsFragment fileDetailsFragment = (FileDetailsFragment) getSupportFragmentManager().findFragmentById(R.id.fileDetailsFragment);
+		FileDetailsFragment fileDetailsFragment = (FileDetailsFragment) getFragmentManager().findFragmentById(R.id.fileDetailsFragment);
 
 		try
 		{

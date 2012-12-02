@@ -1,4 +1,4 @@
-package com.quanturium.androcloud;
+package com.quanturium.androcloud.fragments;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,54 +7,52 @@ import org.json.JSONException;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
-import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SearchView;
-import android.widget.SearchView.OnQueryTextListener;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockFragment;
 import com.cloudapp.api.CloudApp;
 import com.cloudapp.api.CloudAppException;
 import com.cloudapp.api.model.CloudAppItem;
 import com.cloudapp.impl.CloudAppImpl;
 import com.cloudapp.impl.model.CloudAppItemImpl;
 import com.cloudapp.impl.model.DisplayType;
+import com.quanturium.androcloud.R;
+import com.quanturium.androcloud.activities.PreferencesActivity;
 import com.quanturium.androcloud.adapters.FilesAdapter;
 import com.quanturium.androcloud.listener.FilesFragmentListener;
 import com.quanturium.androcloud.tools.Constant;
 import com.quanturium.androcloud.tools.Prefs;
 
-public class FilesFragment extends SherlockFragment implements OnItemClickListener//, MultiChoiceModeListener, OnQueryTextListener
+public class FilesFragment extends Fragment implements OnItemClickListener// , MultiChoiceModeListener, OnQueryTextListener
 {
-	private boolean								isNew				= true;
-	private Activity							activity;
-	private Handler								handler;
-	private com.actionbarsherlock.view.MenuItem	menuItemProgress;
-	private com.actionbarsherlock.view.MenuItem	menuItemRefresh;
+	private boolean					isNew				= true;
+	private Activity				activity;
+	private Handler					handler;
+	private MenuItem				menuItemProgress;
+	private MenuItem				menuItemRefresh;
 
-	private List<CloudAppItem>					files				= new ArrayList<CloudAppItem>();
-	public boolean								currentlyLoading	= false;
-	private ListView							listView;
-	private FilesAdapter						filesAdapter;
-	private LinearLayout						emptyView;
-	private FilesFragmentListener				listener;
+	private List<CloudAppItem>		files				= new ArrayList<CloudAppItem>();
+	public boolean					currentlyLoading	= false;
+	private ListView				listView;
+	private FilesAdapter			filesAdapter;
+	private LinearLayout			emptyView;
+	private FilesFragmentListener	listener;
 
 	@Override
 	public void onAttach(Activity activity)
@@ -66,8 +64,7 @@ public class FilesFragment extends SherlockFragment implements OnItemClickListen
 		try
 		{
 			listener = (FilesFragmentListener) activity;
-		}
-		catch (ClassCastException e)
+		} catch (ClassCastException e)
 		{
 			throw new ClassCastException(activity.toString() + " must implement FilesFragmentListener");
 		}
@@ -115,7 +112,7 @@ public class FilesFragment extends SherlockFragment implements OnItemClickListen
 	{
 		super.onResume();
 
-		if (isFirstRun() && haveCredentialsChanged()) // Si on est toujours dans le firstRun et que il y a changement d'identifiants, on se trouve dans le cas de la premire utilisation avec changement d'identifiant
+		if (isFirstRun() && haveCredentialsChanged()) // Si on est toujours dans le firstRun et que il y a changement d'identifiants, on se trouve dans le cas de la premiï¿½re utilisation avec changement d'identifiant
 		{
 			setFirstRun(false);
 		}
@@ -124,25 +121,27 @@ public class FilesFragment extends SherlockFragment implements OnItemClickListen
 		{
 			firstRun();
 		}
-		else if (haveCredentialsChanged()) // Modification des identifiants, need reload la liste des fichiers
-		{
-			setCredentialsChanged(false);
-			loadFiles(true, 0);
-		}
-		else if (hasNumberFilePerRequestChanged()) // Modification des identifiants, need reload la liste des fichiers
-		{
-			setNumberFilePerRequestChanged(false);
-			loadFiles(true, 0);
-		}
 		else
-		{
-			if (Prefs.getPreferences(activity).getBoolean(Prefs.REFRESH_AUTO, false))
-				loadFiles(false, 0);
-		}
+			if (haveCredentialsChanged()) // Modification des identifiants, need reload la liste des fichiers
+			{
+				setCredentialsChanged(false);
+				loadFiles(true, 0);
+			}
+			else
+				if (hasNumberFilePerRequestChanged()) // Modification des identifiants, need reload la liste des fichiers
+				{
+					setNumberFilePerRequestChanged(false);
+					loadFiles(true, 0);
+				}
+				else
+				{
+					if (Prefs.getPreferences(activity).getBoolean(Prefs.REFRESH_AUTO, false))
+						loadFiles(false, 0);
+				}
 	}
 
 	@Override
-	public boolean onOptionsItemSelected(com.actionbarsherlock.view.MenuItem item)
+	public boolean onOptionsItemSelected(MenuItem item)
 	{
 		switch (item.getItemId())
 		{
@@ -150,13 +149,13 @@ public class FilesFragment extends SherlockFragment implements OnItemClickListen
 
 				startActivity(new Intent(getActivity(), PreferencesActivity.class));
 
-			break;
+				break;
 
 			case R.id.menuItemRefresh:
 
 				loadFiles(true, 0);
 
-			break;
+				break;
 		}
 
 		return false;
@@ -172,7 +171,8 @@ public class FilesFragment extends SherlockFragment implements OnItemClickListen
 		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 		builder.setMessage("First run");
 		builder.setCancelable(false);
-		builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {
+		builder.setPositiveButton("ok", new DialogInterface.OnClickListener()
+		{
 
 			@Override
 			public void onClick(DialogInterface dialog, int which)
@@ -211,7 +211,7 @@ public class FilesFragment extends SherlockFragment implements OnItemClickListen
 	}
 
 	@Override
-	public void onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu, com.actionbarsherlock.view.MenuInflater inflater)
+	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
 		inflater.inflate(R.menu.main_activity, menu);
 
@@ -221,13 +221,13 @@ public class FilesFragment extends SherlockFragment implements OnItemClickListen
 		if (!currentlyLoading)
 			showProgressIcon(false);
 
-//		SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
-//		searchView.setIconifiedByDefault(false);
-//		searchView.setOnQueryTextListener(this);
-//		searchView.setSubmitButtonEnabled(false);
-//		searchView.setQueryHint("Filter files");
-//		searchView.setFocusable(false);
-//		searchView.setFocusableInTouchMode(false);
+		// SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+		// searchView.setIconifiedByDefault(false);
+		// searchView.setOnQueryTextListener(this);
+		// searchView.setSubmitButtonEnabled(false);
+		// searchView.setQueryHint("Filter files");
+		// searchView.setFocusable(false);
+		// searchView.setFocusableInTouchMode(false);
 
 		super.onCreateOptionsMenu(menu, inflater);
 	}
@@ -244,7 +244,7 @@ public class FilesFragment extends SherlockFragment implements OnItemClickListen
 		listView.setEmptyView(emptyView);
 		listView.setTextFilterEnabled(true);
 		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-//		listView.setMultiChoiceModeListener(this);
+		// listView.setMultiChoiceModeListener(this);
 
 		filesAdapter = new FilesAdapter(activity, this.files);
 		listView.setAdapter(filesAdapter);
@@ -301,8 +301,7 @@ public class FilesFragment extends SherlockFragment implements OnItemClickListen
 					filesAdapter.refill(files);
 					return;
 				}
-			}
-			catch (CloudAppException e)
+			} catch (CloudAppException e)
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -322,8 +321,7 @@ public class FilesFragment extends SherlockFragment implements OnItemClickListen
 					filesAdapter.refill(files);
 					return;
 				}
-			}
-			catch (CloudAppException e)
+			} catch (CloudAppException e)
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -347,13 +345,11 @@ public class FilesFragment extends SherlockFragment implements OnItemClickListen
 			try
 			{
 				listener.onFileSelected(((CloudAppItem) this.filesAdapter.getItem(arg2)).toJson());
-			}
-			catch (JSONException e)
+			} catch (JSONException e)
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
-			catch (CloudAppException e)
+			} catch (CloudAppException e)
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -363,9 +359,9 @@ public class FilesFragment extends SherlockFragment implements OnItemClickListen
 
 	/**
 	 * @param reload
-	 *            : en cas de reload, tout les elements de la liste seront supprimŽ avant d'ajouter les nouveaux, en cas de non reload seul les nouveaux elements seront ajoutŽs
+	 *            : en cas de reload, tout les elements de la liste seront supprimï¿½ avant d'ajouter les nouveaux, en cas de non reload seul les nouveaux elements seront ajoutï¿½s
 	 * @param page
-	 *            : si 0, les elements seront ajoutŽ en haut, sinon en bas
+	 *            : si 0, les elements seront ajoutï¿½ en haut, sinon en bas
 	 */
 	private void loadFiles(final boolean reload, final int page)
 	{
@@ -374,7 +370,8 @@ public class FilesFragment extends SherlockFragment implements OnItemClickListen
 			currentlyLoading = true;
 			showProgressIcon(true);
 
-			new Thread(new Runnable() {
+			new Thread(new Runnable()
+			{
 
 				@Override
 				public void run()
@@ -396,13 +393,11 @@ public class FilesFragment extends SherlockFragment implements OnItemClickListen
 						items = api.getItems(page, Integer.valueOf(Prefs.getPreferences(activity).getString(Prefs.FILES_PER_REQUEST, "20")), null, false, null);
 						message.arg1 = 1; // success
 						message.obj = items;
-					}
-					catch (CloudAppException e1)
+					} catch (CloudAppException e1)
 					{
 						message.arg1 = 0;
 						e1.printStackTrace();
-					}
-					finally
+					} finally
 					{
 						handler.sendMessage(message);
 					}
@@ -418,7 +413,8 @@ public class FilesFragment extends SherlockFragment implements OnItemClickListen
 
 	private void setHandler()
 	{
-		this.handler = new Handler() {
+		this.handler = new Handler()
+		{
 
 			@Override
 			public void handleMessage(Message msg)
@@ -468,8 +464,7 @@ public class FilesFragment extends SherlockFragment implements OnItemClickListen
 											{
 												continue OUTERMOST;
 											}
-										}
-										catch (CloudAppException e)
+										} catch (CloudAppException e)
 										{
 											e.printStackTrace();
 										}
@@ -495,8 +490,7 @@ public class FilesFragment extends SherlockFragment implements OnItemClickListen
 											{
 												continue OUTERMOST;
 											}
-										}
-										catch (CloudAppException e)
+										} catch (CloudAppException e)
 										{
 											e.printStackTrace();
 										}
@@ -518,20 +512,20 @@ public class FilesFragment extends SherlockFragment implements OnItemClickListen
 						currentlyLoading = false;
 						showProgressIcon(false);
 
-					break;
+						break;
 
 					case Constant.HANDLER_ACTION_RENAME:
 
 						String[] data = (String[]) msg.obj;
 						fileRename(data[0], data[1]);
 
-					break;
+						break;
 
 					case Constant.HANDLER_ACTION_DELETE:
 
 						fileDelete((String) msg.obj);
 
-					break;
+						break;
 				}
 			}
 		};
@@ -542,83 +536,83 @@ public class FilesFragment extends SherlockFragment implements OnItemClickListen
 		return this.handler;
 	}
 
-//	@Override
-//	public boolean onActionItemClicked(ActionMode mode, MenuItem item)
-//	{
-//		long[] checkedItems;
-//
-//		switch (item.getItemId())
-//		{
-//			case R.id.multiItemSave:
-//
-//				checkedItems = listView.getCheckedItemIds();
-//				Toast.makeText(activity, "multi save", Toast.LENGTH_SHORT).show();
-//
-//			break;
-//
-//			case R.id.multiItemDelete:
-//
-//				checkedItems = listView.getCheckedItemIds();
-//				Toast.makeText(activity, "multi delete", Toast.LENGTH_SHORT).show();
-//				listView.setItemChecked(0, false);
-//
-//			break;
-//		}
-//
-//		return true;
-//	}
+	// @Override
+	// public boolean onActionItemClicked(ActionMode mode, MenuItem item)
+	// {
+	// long[] checkedItems;
+	//
+	// switch (item.getItemId())
+	// {
+	// case R.id.multiItemSave:
+	//
+	// checkedItems = listView.getCheckedItemIds();
+	// Toast.makeText(activity, "multi save", Toast.LENGTH_SHORT).show();
+	//
+	// break;
+	//
+	// case R.id.multiItemDelete:
+	//
+	// checkedItems = listView.getCheckedItemIds();
+	// Toast.makeText(activity, "multi delete", Toast.LENGTH_SHORT).show();
+	// listView.setItemChecked(0, false);
+	//
+	// break;
+	// }
+	//
+	// return true;
+	// }
 
-//	@Override
-//	public boolean onCreateActionMode(ActionMode mode, Menu menu)
-//	{
-//		MenuInflater inflater = activity.getMenuInflater();
-//		inflater.inflate(R.menu.action_select, menu);
-//
-//		mode.setTitle("Select Items");
-//
-//		return true;
-//	}
-//
-//	@Override
-//	public void onDestroyActionMode(ActionMode mode)
-//	{
-//		this.filesAdapter.cancelMultiSelectMode();
-//	}
-//
-//	@Override
-//	public boolean onPrepareActionMode(ActionMode mode, Menu menu)
-//	{
-//		this.filesAdapter.startMultiSelectMode();
-//		return true;
-//	}
-//
-//	@Override
-//	public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked)
-//	{
-//		((CloudAppItem) this.filesAdapter.getItem(position)).setChecked(checked);
-//
-//		int checkedCount = listView.getCheckedItemCount();
-//
-//		mode.setSubtitle("" + checkedCount + " item(s) selected");
-//	}
-//
-//	@Override
-//	public boolean onQueryTextChange(String newText)
-//	{
-//		if (filesAdapter != null && newText != null && files.size() > 0)
-//		{
-//			filesAdapter.getFilter().filter(newText);
-//			return true;
-//		}
-//		else
-//		{
-//			return false;
-//		}
-//	}
-//
-//	@Override
-//	public boolean onQueryTextSubmit(String query)
-//	{
-//		return false;
-//	}
+	// @Override
+	// public boolean onCreateActionMode(ActionMode mode, Menu menu)
+	// {
+	// MenuInflater inflater = activity.getMenuInflater();
+	// inflater.inflate(R.menu.action_select, menu);
+	//
+	// mode.setTitle("Select Items");
+	//
+	// return true;
+	// }
+	//
+	// @Override
+	// public void onDestroyActionMode(ActionMode mode)
+	// {
+	// this.filesAdapter.cancelMultiSelectMode();
+	// }
+	//
+	// @Override
+	// public boolean onPrepareActionMode(ActionMode mode, Menu menu)
+	// {
+	// this.filesAdapter.startMultiSelectMode();
+	// return true;
+	// }
+	//
+	// @Override
+	// public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked)
+	// {
+	// ((CloudAppItem) this.filesAdapter.getItem(position)).setChecked(checked);
+	//
+	// int checkedCount = listView.getCheckedItemCount();
+	//
+	// mode.setSubtitle("" + checkedCount + " item(s) selected");
+	// }
+	//
+	// @Override
+	// public boolean onQueryTextChange(String newText)
+	// {
+	// if (filesAdapter != null && newText != null && files.size() > 0)
+	// {
+	// filesAdapter.getFilter().filter(newText);
+	// return true;
+	// }
+	// else
+	// {
+	// return false;
+	// }
+	// }
+	//
+	// @Override
+	// public boolean onQueryTextSubmit(String query)
+	// {
+	// return false;
+	// }
 }
