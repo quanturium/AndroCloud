@@ -17,7 +17,8 @@ import com.quanturium.androcloud.transfert.upload.UploadTask;
 
 public class UploadActivity extends Activity
 {
-	/** Called when the activity is first created. */
+	private final static String	TAG	= "UploadActivity";
+
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
@@ -27,65 +28,66 @@ public class UploadActivity extends Activity
 		String action = intent.getAction();
 		String type = intent.getType();
 		String test = intent.getStringExtra(Intent.EXTRA_TEXT);
-		
+
 		if (Intent.ACTION_SEND.equals(action) && type != null)
-		{			
-			ArrayList<Uri> files = getFile(intent); // Handle single file being sent
-	
-			if (files == null)
-			{
-				Log.e("Share action", "Sharing file's uri is null");
-				Toast.makeText(this, "Invalid data received", Toast.LENGTH_SHORT).show();
-			}
-			else
-			{
-				File file = null;
-	
-				for (Uri uri : files)
-				{
-					file = Tools.UriToFile(this, uri);
-	
-					Log.i("Share action", "Sharing file's path : " + file.toString());
-					TransfertTask task = new UploadTask(this, file);
-					
-					if(android.os.Build.VERSION.SDK_INT < 11)
-						task.execute("test");
-					else
-						task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "test");
-				}
-			}
-		}
-		else if (Intent.ACTION_SEND_MULTIPLE.equals(action) && type != null)
 		{
-			ArrayList<Uri> files = getFiles(intent); // Handle multiple files being sent
-	
+			ArrayList<Uri> files = getFile(intent); // Handle single file being sent
+
 			if (files == null)
 			{
-				Log.e("Share action", "Sharing file's uri is null");
+				Log.e(TAG, "Sharing file's uri is null");
 				Toast.makeText(this, "Invalid data received", Toast.LENGTH_SHORT).show();
 			}
 			else
 			{
 				File file = null;
-	
+
 				for (Uri uri : files)
 				{
 					file = Tools.UriToFile(this, uri);
-	
-					Log.i("Share action", "Sharing file's path : " + file.toString());
+
+					Log.i(TAG, "Sharing file's path : " + file.toString());
 					TransfertTask task = new UploadTask(this, file);
-					
-					if(android.os.Build.VERSION.SDK_INT < 11)
+
+					if (android.os.Build.VERSION.SDK_INT < 11)
 						task.execute("test");
 					else
 						task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "test");
 				}
 			}
 		}
-		
+		else
+			if (Intent.ACTION_SEND_MULTIPLE.equals(action) && type != null)
+			{
+				ArrayList<Uri> files = getFiles(intent); // Handle multiple files being sent
+
+				if (files == null)
+				{
+					Log.e(TAG, "Sharing file's uri is null");
+					Toast.makeText(this, "Invalid data received", Toast.LENGTH_SHORT).show();
+				}
+				else
+				{
+					File file = null;
+
+					for (Uri uri : files)
+					{
+						file = Tools.UriToFile(this, uri);
+
+						Log.i(TAG, "Sharing file's path : " + file.toString());
+						TransfertTask task = new UploadTask(this, file);
+
+						if (android.os.Build.VERSION.SDK_INT < 11)
+							task.execute("test");
+						else
+							task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "test");
+					}
+				}
+			}
+
 		finish();
 	}
-	
+
 	private ArrayList<Uri> getFile(Intent intent)
 	{
 		Uri fileUri = (Uri) intent.getParcelableExtra(Intent.EXTRA_STREAM);

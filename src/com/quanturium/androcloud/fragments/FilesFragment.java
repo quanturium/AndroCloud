@@ -54,11 +54,13 @@ public class FilesFragment extends Fragment implements OnItemClickListener// , M
 	private LinearLayout			emptyView;
 	private FilesFragmentListener	listener;
 
+	private final static String		TAG					= "FilesFragment";
+
 	@Override
 	public void onAttach(Activity activity)
 	{
 
-		Log.i("debug", "Mainfragment : attach to " + activity.toString());
+		Log.i(TAG, "Mainfragment : attach to " + activity.toString());
 
 		super.onAttach(activity);
 		try
@@ -72,7 +74,7 @@ public class FilesFragment extends Fragment implements OnItemClickListener// , M
 
 	public void onCreate(Bundle savedInstanceState)
 	{
-		Log.i("debug", "Mainfragment : create");
+		Log.i(TAG, "Mainfragment : create");
 
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
@@ -84,7 +86,7 @@ public class FilesFragment extends Fragment implements OnItemClickListener// , M
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		Log.i("debug", "Mainfragment : create view");
+		Log.i(TAG, "Mainfragment : create view");
 
 		View mainView = inflater.inflate(R.layout.main, container, false);
 		return mainView;
@@ -93,7 +95,7 @@ public class FilesFragment extends Fragment implements OnItemClickListener// , M
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState)
 	{
-		Log.i("debug", "Mainfragment : activity created");
+		Log.i(TAG, "Mainfragment : activity created");
 
 		super.onActivityCreated(savedInstanceState);
 

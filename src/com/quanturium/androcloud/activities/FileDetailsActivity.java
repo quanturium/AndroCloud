@@ -14,12 +14,13 @@ import com.quanturium.androcloud.tools.Constant;
 
 public class FileDetailsActivity extends Activity implements FilesDetailsFragmentListener
 {
+	private final static String TAG = "FileDetailsActivity";
 	private Bundle	resultBundle	= new Bundle();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
-		Log.i("debug", "ativity : create " + this.toString());
+		Log.i(TAG, "ativity : create " + this.toString());
 
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);

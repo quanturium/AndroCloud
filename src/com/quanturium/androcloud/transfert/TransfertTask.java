@@ -32,7 +32,7 @@ public abstract class TransfertTask extends AsyncTask<String, Integer, Object>
 	@Override
 	protected void onPreExecute()
 	{
-		Log.i("Task new", "onPreExecute");
+		Log.i("New task", "onPreExecute");
 		Toast.makeText(this.context, getStringAction() + " started", Toast.LENGTH_SHORT).show();
 
 		if (showNotification)

@@ -68,10 +68,12 @@ public class FileDetailsFragment extends Fragment
 	private ProgressBar						imageLoader;
 	private Bitmap							imageBitmap			= null;
 
+	private final static String				TAG					= "FileDetailsFragment";
+
 	@Override
 	public void onAttach(Activity activity)
 	{
-		Log.i("debug", "fragment : attach to " + activity.toString());
+		Log.i(TAG, "fragment : attach to " + activity.toString());
 
 		super.onAttach(activity);
 		try
@@ -79,7 +81,7 @@ public class FileDetailsFragment extends Fragment
 			listener = (FilesDetailsFragmentListener) activity;
 		} catch (ClassCastException e)
 		{
-			Log.e("fragment", "error");
+			Log.e(TAG, "error");
 			throw new ClassCastException(activity.toString() + " must implement FileDetailsFragmentListener");
 		}
 	}
@@ -87,7 +89,7 @@ public class FileDetailsFragment extends Fragment
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
-		Log.i("debug", "fragment : create");
+		Log.i(TAG, "fragment : create");
 
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
@@ -99,7 +101,7 @@ public class FileDetailsFragment extends Fragment
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		Log.i("debug", "fragment : view create");
+		Log.i(TAG, "fragment : view create");
 
 		if (container == null)
 			return null;
@@ -111,7 +113,7 @@ public class FileDetailsFragment extends Fragment
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState)
 	{
-		Log.i("debug", "fragment : activity created");
+		Log.i(TAG, "fragment : activity created");
 
 		super.onActivityCreated(savedInstanceState);
 
@@ -251,7 +253,7 @@ public class FileDetailsFragment extends Fragment
 		if (currentlyLoading)
 		{
 			int order = menu.findItem(currentlyAction).getOrder();
-			Log.i("order", order + "");
+			Log.i(TAG,"Order " + order + "");
 			menu.add(Menu.NONE, Menu.NONE, order, "Loading").setActionView(R.layout.progress).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 			menu.removeItem(currentlyAction);
 		}

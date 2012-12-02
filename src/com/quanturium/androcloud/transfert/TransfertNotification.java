@@ -116,8 +116,6 @@ public class TransfertNotification
 			builder.setTicker(text_ticker);
 			builder.setSmallIcon(icon_ticker);
 
-			Log.i("notifSize", context.getResources().getDimensionPixelSize(android.R.dimen.notification_large_icon_width) + ";" + context.getResources().getDimensionPixelSize(android.R.dimen.notification_large_icon_height));
-
 			// builder.setLargeIcon(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), icon_uploading), context.getResources().getDimensionPixelSize(android.R.dimen.notification_large_icon_width), context.getResources().getDimensionPixelSize(android.R.dimen.notification_large_icon_height), false));
 
 			if (android.os.Build.VERSION.SDK_INT >= 14)

@@ -31,6 +31,8 @@ public class FilesAdapter extends BaseAdapter implements Filterable
 	public boolean				lastItemLoading	= false;
 	private Filter				filter;
 	private boolean				multiSelectMode	= false;
+	
+	private final static String	TAG	= "FilesAdapter";
 
 	public FilesAdapter(Context context, List<CloudAppItem> items)
 	{
@@ -261,8 +263,6 @@ public class FilesAdapter extends BaseAdapter implements Filterable
 	@SuppressWarnings("unchecked")
 	public Filter getFilter()
 	{
-
-		final String TAG = "aaaa";
 
 		if (filter == null)
 		{
