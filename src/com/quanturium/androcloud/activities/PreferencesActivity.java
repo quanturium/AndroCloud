@@ -27,11 +27,13 @@ public class PreferencesActivity extends PreferenceActivity implements OnSharedP
 
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 		prefs.registerOnSharedPreferenceChangeListener(this);
-
+		
 		setClearCacheAction();
 
+		
+		setSummaryNbFileToDisplay();
 		setSummaryCredentials();
-
+		
 		setSummaryDirectoryType();
 		setSummaryDirectory(Prefs.DIRECTORY_MOVIES);
 		setSummaryDirectory(Prefs.DIRECTORY_MUSICS);
@@ -75,6 +77,17 @@ public class PreferencesActivity extends PreferenceActivity implements OnSharedP
 
 		if (key.equals(Prefs.UPLOAD_NOTIFICATION_ACTION))
 			setSummaryUploadAction();
+		
+		if(key.equals(Prefs.FILES_PER_REQUEST))
+			setSummaryNbFileToDisplay();
+	}
+	
+	private void setSummaryNbFileToDisplay()
+	{
+		Preference preferencesNbFileToDisplay = findPreference(Prefs.FILES_PER_REQUEST);
+		String preferencesNbFileToDisplayValue = Prefs.getPreferences(this).getString(Prefs.FILES_PER_REQUEST, "20");
+
+		preferencesNbFileToDisplay.setSummary(preferencesNbFileToDisplayValue);		
 	}
 
 	private void setSummaryDownloadAction()
