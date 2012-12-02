@@ -112,23 +112,25 @@ public class FilesFragment extends Fragment implements OnItemClickListener// , M
 	{
 		super.onResume();
 
-		if (isFirstRun() && haveCredentialsChanged()) // Si on est toujours dans le firstRun et que il y a changement d'identifiants, on se trouve dans le cas de la premi�re utilisation avec changement d'identifiant
+		if (isFirstRun() && haveCredentialsChanged()) // first run and credentials have changed
 		{
 			setFirstRun(false);
 		}
 
-		if (isFirstRun()) // Le client n'a pas defini ses identifiants (premier lancement), du coup on l'oblige a les definir
+		if (isFirstRun()) // first run, but the user haven't changed his credentials
 		{
 			firstRun();
 		}
 		else
-			if (haveCredentialsChanged()) // Modification des identifiants, need reload la liste des fichiers
+		{
+			if (haveCredentialsChanged()) // Credentials have changed, we have to reload
 			{
 				setCredentialsChanged(false);
 				loadFiles(true, 0);
 			}
 			else
-				if (hasNumberFilePerRequestChanged()) // Modification des identifiants, need reload la liste des fichiers
+			{
+				if (hasNumberFilePerRequestChanged()) // The number of file per request has changed, we have to reload
 				{
 					setNumberFilePerRequestChanged(false);
 					loadFiles(true, 0);
@@ -138,6 +140,8 @@ public class FilesFragment extends Fragment implements OnItemClickListener// , M
 					if (Prefs.getPreferences(activity).getBoolean(Prefs.REFRESH_AUTO, false))
 						loadFiles(false, 0);
 				}
+			}
+		}
 	}
 
 	@Override
@@ -249,7 +253,7 @@ public class FilesFragment extends Fragment implements OnItemClickListener// , M
 		filesAdapter = new FilesAdapter(activity, this.files);
 		listView.setAdapter(filesAdapter);
 
-		if (android.os.Build.VERSION.SDK_INT < 11) // Verifier si 11 est bien la bonne cible
+		if (android.os.Build.VERSION.SDK_INT < 11) // TODO : check if 11 is right
 			registerForContextMenu(listView);
 	}
 
@@ -262,7 +266,7 @@ public class FilesFragment extends Fragment implements OnItemClickListener// , M
 			message.arg1 = 1;
 			message.obj = files;
 
-			this.handler.sendMessage(message); // Notifier qu'il faut recharger la liste
+			this.handler.sendMessage(message); // Notify that a reload is needed
 		}
 		else
 		{
@@ -359,9 +363,9 @@ public class FilesFragment extends Fragment implements OnItemClickListener// , M
 
 	/**
 	 * @param reload
-	 *            : en cas de reload, tout les elements de la liste seront supprim� avant d'ajouter les nouveaux, en cas de non reload seul les nouveaux elements seront ajout�s
+	 *            : When reload=true, all items in the listview are removed ; when reload=false, only the new items will be added
 	 * @param page
-	 *            : si 0, les elements seront ajout� en haut, sinon en bas
+	 *            : if 0, items will be added on top, else on the bottom
 	 */
 	private void loadFiles(final boolean reload, final int page)
 	{
@@ -422,7 +426,7 @@ public class FilesFragment extends Fragment implements OnItemClickListener// , M
 
 				switch (msg.what)
 				{
-					case Constant.HANDLER_ACTION_RELOAD: // Si c'est un reload on recharge tout
+					case Constant.HANDLER_ACTION_RELOAD: // We reload everything = we remove the old items
 
 						@SuppressWarnings("unchecked")
 						List<CloudAppItem> items2 = (List<CloudAppItem>) msg.obj;
@@ -441,7 +445,7 @@ public class FilesFragment extends Fragment implements OnItemClickListener// , M
 						currentlyLoading = false;
 						showProgressIcon(false);
 
-					case Constant.HANDLER_ACTION_LOAD: // Si ce n'est pas un reload (juste un load), mais juste un petit rafraichissement, il faut faire la diff avec ce qui est sur l'ecran et ce que l'on a obtenu pour rajouter uniquement ce qui est nouveau
+					case Constant.HANDLER_ACTION_LOAD: // Load = first load or refresh ; When we load we need to do a "diff" with the displayed items
 
 						@SuppressWarnings("unchecked")
 						List<CloudAppItem> items = (List<CloudAppItem>) msg.obj;
@@ -454,7 +458,7 @@ public class FilesFragment extends Fragment implements OnItemClickListener// , M
 							{
 								FilesFragment.this.files.remove(FilesFragment.this.files.size() - 1);
 
-								OUTERMOST: for (CloudAppItem item : FilesFragment.this.files) // On ajoute uniquement les nouveau
+								OUTERMOST: for (CloudAppItem item : FilesFragment.this.files) // We add only the new items
 								{
 									for (CloudAppItem item2 : items)
 									{
@@ -480,7 +484,7 @@ public class FilesFragment extends Fragment implements OnItemClickListener// , M
 							{
 								FilesFragment.this.files.remove(FilesFragment.this.files.size() - 1);
 
-								OUTERMOST: for (CloudAppItem item : items) // On ajoute uniquement les nouveau
+								OUTERMOST: for (CloudAppItem item : items) // We add only the new items
 								{
 									for (CloudAppItem item2 : FilesFragment.this.files)
 									{

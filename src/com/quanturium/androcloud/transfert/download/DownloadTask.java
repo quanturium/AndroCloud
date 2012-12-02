@@ -133,9 +133,9 @@ public class DownloadTask extends TransfertTask
 		Message message = new Message();
 		message.what = Constant.HANDLER_ACTION_SAVE;
 		
-		if(this.error == null) // si c'est cancel sans error, cela veut dire que c'est l'utilisateur qui a cancel en cliquant sur la croix de la notification
+		if(this.error == null) // In case the user cancelled it by clicking on the "x"
 		{
-			message.arg1 = 0; // cancel par l'utilisateur
+			message.arg1 = 0; 
 		}
 		else
 		{

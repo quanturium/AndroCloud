@@ -53,8 +53,7 @@ public class Tools
 				}
 			}
 
-		}
-		catch (NoSuchAlgorithmException e)
+		} catch (NoSuchAlgorithmException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -94,22 +93,24 @@ public class Tools
 		{
 			fileName = uri.getLastPathSegment();
 		}
-		else if (scheme.equals("content"))
-		{
-			String[] proj = { MediaStore.Images.Media.TITLE };
-			Cursor cursor = context.getContentResolver().query(uri, proj, null, null, null);
-
-			if (cursor != null && cursor.getCount() != 0)
-			{
-				int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.TITLE);
-				cursor.moveToFirst();
-				fileName = cursor.getString(columnIndex);
-			}
-		}
 		else
-		{
-			return null;
-		}
+			if (scheme.equals("content"))
+			{
+				String[] proj =
+				{ MediaStore.Images.Media.TITLE };
+				Cursor cursor = context.getContentResolver().query(uri, proj, null, null, null);
+
+				if (cursor != null && cursor.getCount() != 0)
+				{
+					int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.TITLE);
+					cursor.moveToFirst();
+					fileName = cursor.getString(columnIndex);
+				}
+			}
+			else
+			{
+				return null;
+			}
 
 		return fileName;
 	}
@@ -123,21 +124,25 @@ public class Tools
 		{
 			file = new File(uri.getPath());
 		}
-		else if (scheme.equals("content"))
-		{
-			String[] proj = { MediaStore.MediaColumns.DATA };
-			Cursor cursor = context.getContentResolver().query(uri, proj, null, null, null);
-
-			if (cursor != null && cursor.getCount() != 0)
-			{
-				int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
-				cursor.moveToFirst();
-				file = new File(cursor.getString(columnIndex));
-			}
-		}
 		else
 		{
-			return null;
+			if (scheme.equals("content"))
+			{
+				String[] proj =
+				{ MediaStore.MediaColumns.DATA };
+				Cursor cursor = context.getContentResolver().query(uri, proj, null, null, null);
+
+				if (cursor != null && cursor.getCount() != 0)
+				{
+					int columnIndex = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
+					cursor.moveToFirst();
+					file = new File(cursor.getString(columnIndex));
+				}
+			}
+			else
+			{
+				return null;
+			}
 		}
 
 		return file;

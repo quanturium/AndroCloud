@@ -77,8 +77,7 @@ public class FileDetailsFragment extends Fragment
 		try
 		{
 			listener = (FilesDetailsFragmentListener) activity;
-		}
-		catch (ClassCastException e)
+		} catch (ClassCastException e)
 		{
 			Log.e("fragment", "error");
 			throw new ClassCastException(activity.toString() + " must implement FileDetailsFragmentListener");
@@ -145,13 +144,13 @@ public class FileDetailsFragment extends Fragment
 				if (!listener.isDualView())
 					activity.finish();
 
-			break;
+				break;
 
 			case R.id.menuItemView:
 
 				openFile();
 
-			break;
+				break;
 
 			case R.id.menuItemSave:
 
@@ -160,14 +159,15 @@ public class FileDetailsFragment extends Fragment
 				{
 					saveFile = new File(getSavingFolder(), file.getName());
 
-					if (saveFile.exists()) // On ouvre le fichier
+					if (saveFile.exists())
 					{
 						AlertDialog.Builder alert = new AlertDialog.Builder(this.activity);
 
 						alert.setTitle("Open file");
 						alert.setMessage("A file with the same name already exists. Do you want to overwrite it ?");
 						alert.setNegativeButton("Cancel", null);
-						alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+						alert.setPositiveButton("Ok", new DialogInterface.OnClickListener()
+						{
 							public void onClick(DialogInterface dialog, int whichButton)
 							{
 								saveFile(false);
@@ -180,20 +180,19 @@ public class FileDetailsFragment extends Fragment
 					{
 						saveFile(false);
 					}
-				}
-				catch (CloudAppException e1)
+				} catch (CloudAppException e1)
 				{
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
 
-			break;
+				break;
 
 			case R.id.menuItemShare:
 
 				shareFile();
 
-			break;
+				break;
 
 			case R.id.menuItemRename:
 
@@ -207,7 +206,8 @@ public class FileDetailsFragment extends Fragment
 				input.setSelectAllOnFocus(true);
 				alert.setView(input);
 				alert.setNegativeButton("Cancel", null);
-				alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+				alert.setPositiveButton("Ok", new DialogInterface.OnClickListener()
+				{
 					public void onClick(DialogInterface dialog, int whichButton)
 					{
 						String value = input.getText().toString().trim();
@@ -227,13 +227,13 @@ public class FileDetailsFragment extends Fragment
 
 				alert.show();
 
-			break;
+				break;
 
 			case R.id.menuItemDelete:
 
 				deleteFile();
 
-			break;
+				break;
 
 			default:
 
@@ -242,7 +242,7 @@ public class FileDetailsFragment extends Fragment
 
 		return super.onOptionsItemSelected(item);
 	}
-	
+
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
@@ -290,35 +290,34 @@ public class FileDetailsFragment extends Fragment
 
 					case AUDIO:
 						ressource = R.drawable.ic_itemtype_audio;
-					break;
+						break;
 
 					case BOOKMARK:
 						ressource = R.drawable.ic_itemtype_bookmark;
-					break;
+						break;
 
 					case IMAGE:
 						ressource = R.drawable.ic_itemtype_image;
-					break;
+						break;
 
 					case VIDEO:
 						ressource = R.drawable.ic_itemtype_video;
-					break;
+						break;
 
 					case TEXT:
 						ressource = R.drawable.ic_itemtype_text;
-					break;
+						break;
 
 					case ARCHIVE:
 						ressource = R.drawable.ic_itemtype_archive;
-					break;
+						break;
 
 					case UNKNOWN:
 					default:
 						ressource = R.drawable.ic_itemtype_unknown;
-					break;
+						break;
 				}
-			}
-			catch (CloudAppException e)
+			} catch (CloudAppException e)
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -327,13 +326,12 @@ public class FileDetailsFragment extends Fragment
 			if (android.os.Build.VERSION.SDK_INT >= 14)
 			{
 				actionBar.setIcon(ressource);
-			}			
-			
+			}
+
 			try
 			{
 				actionBar.setSubtitle(file.getName());
-			}
-			catch (CloudAppException e)
+			} catch (CloudAppException e)
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -349,32 +347,32 @@ public class FileDetailsFragment extends Fragment
 
 				case AUDIO:
 					drawableRessource = R.drawable.file_audio;
-				break;
+					break;
 
 				case BOOKMARK:
 					drawableRessource = R.drawable.file_bookmark;
-				break;
+					break;
 
 				case IMAGE:
 
-				break;
+					break;
 
 				case VIDEO:
 					drawableRessource = R.drawable.file_video;
-				break;
+					break;
 
 				case TEXT:
 					drawableRessource = R.drawable.file_text;
-				break;
+					break;
 
 				case ARCHIVE:
 					drawableRessource = R.drawable.file_archive;
-				break;
+					break;
 
 				case UNKNOWN:
 				default:
 					drawableRessource = R.drawable.file_unknown;
-				break;
+					break;
 			}
 
 			if (drawableRessource == null)
@@ -402,8 +400,7 @@ public class FileDetailsFragment extends Fragment
 
 				displayView(imageView);
 			}
-		}
-		catch (CloudAppException e)
+		} catch (CloudAppException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -430,25 +427,25 @@ public class FileDetailsFragment extends Fragment
 
 					folder = Prefs.getPreferences(activity).getString(Prefs.DIRECTORY_PICTURES, null);
 
-				break;
+					break;
 
 				case AUDIO:
 
 					folder = Prefs.getPreferences(activity).getString(Prefs.DIRECTORY_MUSICS, null);
 
-				break;
+					break;
 
 				case VIDEO:
 
 					folder = Prefs.getPreferences(activity).getString(Prefs.DIRECTORY_MOVIES, null);
 
-				break;
+					break;
 
 				case TEXT:
 
 					folder = Prefs.getPreferences(activity).getString(Prefs.DIRECTORY_TEXTS, null);
 
-				break;
+					break;
 
 				case ARCHIVE:
 				case BOOKMARK:
@@ -457,10 +454,9 @@ public class FileDetailsFragment extends Fragment
 
 					folder = Prefs.getPreferences(activity).getString(Prefs.DIRECTORY_UNKOWN, null);
 
-				break;
+					break;
 			}
-		}
-		catch (CloudAppException e)
+		} catch (CloudAppException e)
 		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -475,16 +471,14 @@ public class FileDetailsFragment extends Fragment
 		{
 			int index = file.getRemoteUrl().lastIndexOf(".") + 1;
 
-			if (index == 0) // aucune extention
+			if (index == 0) // no file extention
 				throw new Exception();
 
 			return file.getRemoteUrl().substring(index);
-		}
-		catch (CloudAppException e)
+		} catch (CloudAppException e)
 		{
 			return null;
-		}
-		catch (Exception e)
+		} catch (Exception e)
 		{
 			return null;
 		}
@@ -496,7 +490,7 @@ public class FileDetailsFragment extends Fragment
 		{
 			int index = file.getName().lastIndexOf(".") + 1;
 
-			if (index == 0) // aucune extention
+			if (index == 0) // no file extention
 			{
 				return file.getName();
 			}
@@ -504,8 +498,7 @@ public class FileDetailsFragment extends Fragment
 			{
 				return file.getName().substring(0, index - 1);
 			}
-		}
-		catch (CloudAppException e)
+		} catch (CloudAppException e)
 		{
 			return null;
 		}
@@ -518,8 +511,7 @@ public class FileDetailsFragment extends Fragment
 			try
 			{
 				this.file = new CloudAppItemImpl(new JSONObject(jsonString));
-			}
-			catch (JSONException e)
+			} catch (JSONException e)
 			{
 				e.printStackTrace();
 			}
@@ -528,7 +520,8 @@ public class FileDetailsFragment extends Fragment
 
 	private void loadPicture()
 	{
-		new Thread(new Runnable() {
+		new Thread(new Runnable()
+		{
 
 			@Override
 			public void run()
@@ -543,8 +536,8 @@ public class FileDetailsFragment extends Fragment
 					InputStream inputStream = connection.getInputStream();
 					imageBitmap = BitmapFactory.decodeStream(inputStream);
 					int new_width = 0, new_height = 0;
-					float ratio = (float) imageBitmap.getHeight() / imageBitmap.getWidth();					
-					
+					float ratio = (float) imageBitmap.getHeight() / imageBitmap.getWidth();
+
 					if (imageBitmap.getWidth() > Constant.MAX_IMAGE_SIZE_PX && imageBitmap.getHeight() > Constant.MAX_IMAGE_SIZE_PX)
 					{
 
@@ -561,41 +554,38 @@ public class FileDetailsFragment extends Fragment
 
 						imageBitmap = Bitmap.createScaledBitmap(imageBitmap, new_width, new_height, false);
 					}
-					else if (imageBitmap.getWidth() > Constant.MAX_IMAGE_SIZE_PX)
-					{
-						new_width = Constant.MAX_IMAGE_SIZE_PX;
-						new_height = (int) (Constant.MAX_IMAGE_SIZE_PX * ratio);						
-						
-						imageBitmap = Bitmap.createScaledBitmap(imageBitmap, Constant.MAX_IMAGE_SIZE_PX, new_height, false);
-					}
-					else if (imageBitmap.getHeight() > Constant.MAX_IMAGE_SIZE_PX)
-					{
-						new_width = (int) (Constant.MAX_IMAGE_SIZE_PX / ratio);
-						new_height = Constant.MAX_IMAGE_SIZE_PX;
-						
-						imageBitmap = Bitmap.createScaledBitmap(imageBitmap, new_width, Constant.MAX_IMAGE_SIZE_PX, false);
-					}
+					else
+						if (imageBitmap.getWidth() > Constant.MAX_IMAGE_SIZE_PX)
+						{
+							new_width = Constant.MAX_IMAGE_SIZE_PX;
+							new_height = (int) (Constant.MAX_IMAGE_SIZE_PX * ratio);
+
+							imageBitmap = Bitmap.createScaledBitmap(imageBitmap, Constant.MAX_IMAGE_SIZE_PX, new_height, false);
+						}
+						else
+							if (imageBitmap.getHeight() > Constant.MAX_IMAGE_SIZE_PX)
+							{
+								new_width = (int) (Constant.MAX_IMAGE_SIZE_PX / ratio);
+								new_height = Constant.MAX_IMAGE_SIZE_PX;
+
+								imageBitmap = Bitmap.createScaledBitmap(imageBitmap, new_width, Constant.MAX_IMAGE_SIZE_PX, false);
+							}
 
 					Cache.setCachedBitmap(activity, "bitmap." + Tools.md5(file.getHref()) + ".png", imageBitmap);
 
-				}
-				catch (CloudAppException e)
+				} catch (CloudAppException e)
 				{
 					e.printStackTrace();
-				}
-				catch (MalformedURLException e)
+				} catch (MalformedURLException e)
 				{
 					e.printStackTrace();
-				}
-				catch (IOException e)
+				} catch (IOException e)
 				{
 					e.printStackTrace();
-				}
-				catch (NullPointerException e)
+				} catch (NullPointerException e)
 				{
 					e.printStackTrace();
-				}
-				finally
+				} finally
 				{
 					handler.sendEmptyMessage(Constant.HANDLER_ACTION_PICTURE_LOADED);
 				}
@@ -610,7 +600,8 @@ public class FileDetailsFragment extends Fragment
 		{
 			listener.onStartLoading(R.id.menuItemDelete);
 
-			new Thread(new Runnable() {
+			new Thread(new Runnable()
+			{
 
 				@Override
 				public void run()
@@ -623,16 +614,14 @@ public class FileDetailsFragment extends Fragment
 					try
 					{
 						api.delete(file);
-						// TODO delete le fichier en local si il existe
+						// TODO Delete the local file if it exists
 						message.arg1 = 1; // success
 						message.obj = file.getHref();
-					}
-					catch (CloudAppException e)
+					} catch (CloudAppException e)
 					{
-						message.arg1 = 0; // echec
+						message.arg1 = 0; // fail
 						e.printStackTrace();
-					}
-					finally
+					} finally
 					{
 						handler.sendMessage(message);
 					}
@@ -648,7 +637,8 @@ public class FileDetailsFragment extends Fragment
 		{
 			listener.onStartLoading(R.id.menuItemRename);
 
-			new Thread(new Runnable() {
+			new Thread(new Runnable()
+			{
 
 				@Override
 				public void run()
@@ -661,17 +651,16 @@ public class FileDetailsFragment extends Fragment
 					try
 					{
 						api.rename(file, newName);
-						// TODO rename le fichier en local si il existe
+						// TODO Rename the local file if it exists
 						message.arg1 = 1; // success
-						String[] data = { file.getHref(), newName };
+						String[] data =
+						{ file.getHref(), newName };
 						message.obj = data;
-					}
-					catch (CloudAppException e)
+					} catch (CloudAppException e)
 					{
-						message.arg1 = 0; // echec
+						message.arg1 = 0; // fail
 						e.printStackTrace();
-					}
-					finally
+					} finally
 					{
 						handler.sendMessage(message);
 					}
@@ -691,8 +680,7 @@ public class FileDetailsFragment extends Fragment
 			{
 				TransfertTask task = new DownloadTask(activity, file, file.getName(), this, openWhenSaved);
 				task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "test");
-			}
-			catch (CloudAppException e)
+			} catch (CloudAppException e)
 			{
 				e.printStackTrace();
 			}
@@ -715,13 +703,11 @@ public class FileDetailsFragment extends Fragment
 
 			message.arg1 = 1; // success
 			message.obj = file.getHref();
-		}
-		catch (CloudAppException e)
+		} catch (CloudAppException e)
 		{
-			message.arg1 = 0; // echec
+			message.arg1 = 0; // fail
 			e.printStackTrace();
-		}
-		finally
+		} finally
 		{
 			handler.sendMessage(message);
 		}
@@ -735,7 +721,7 @@ public class FileDetailsFragment extends Fragment
 			{
 				File saveFile = new File(getSavingFolder(), file.getName());
 
-				if (saveFile.exists()) // On ouvre le fichier
+				if (saveFile.exists())
 				{
 					Intent i = new Intent();
 					i.setAction(android.content.Intent.ACTION_VIEW);
@@ -743,14 +729,15 @@ public class FileDetailsFragment extends Fragment
 					startActivity(i);
 				}
 				else
-				// on propose de l'enregister avant de l'ouvrir
+				// We propose to save it before opening it
 				{
 					AlertDialog.Builder alert = new AlertDialog.Builder(this.activity);
 
 					alert.setTitle("Open file");
 					alert.setMessage("The file has not been found on your device. You have to save it before being able to open it. Would you like to download and save the file ?");
 					alert.setNegativeButton("Cancel", null);
-					alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+					alert.setPositiveButton("Ok", new DialogInterface.OnClickListener()
+					{
 						public void onClick(DialogInterface dialog, int whichButton)
 						{
 							saveFile(true);
@@ -759,8 +746,7 @@ public class FileDetailsFragment extends Fragment
 
 					alert.show();
 				}
-			}
-			catch (CloudAppException e)
+			} catch (CloudAppException e)
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -770,7 +756,8 @@ public class FileDetailsFragment extends Fragment
 
 	private void setHandler()
 	{
-		this.handler = new Handler() {
+		this.handler = new Handler()
+		{
 
 			@Override
 			public void handleMessage(Message msg)
@@ -790,17 +777,16 @@ public class FileDetailsFragment extends Fragment
 							}
 							else
 								Toast.makeText(activity, "Deleting " + file.getName() + " : error", Toast.LENGTH_SHORT).show();
-						}
-						catch (CloudAppException e)
+						} catch (CloudAppException e)
 						{
 							e.printStackTrace();
 						}
 
-					break;
+						break;
 
 					case Constant.HANDLER_ACTION_OPEN:
 
-					break;
+						break;
 
 					case Constant.HANDLER_ACTION_RENAME:
 
@@ -821,13 +807,12 @@ public class FileDetailsFragment extends Fragment
 							}
 							else
 								Toast.makeText(activity, "Renaming " + file.getName() + " : error", Toast.LENGTH_SHORT).show();
-						}
-						catch (CloudAppException e)
+						} catch (CloudAppException e)
 						{
 							e.printStackTrace();
 						}
 
-					break;
+						break;
 
 					case Constant.HANDLER_ACTION_SAVE:
 
@@ -842,18 +827,18 @@ public class FileDetailsFragment extends Fragment
 								if (msg.arg2 == 1)
 									openFile();
 							}
-							else if(msg.arg1 == 0)
-							{
-								Toast.makeText(activity, "Downloading " + file.getName() + " : canceled", Toast.LENGTH_SHORT).show();
-							}
-								
-						}
-						catch (CloudAppException e)
+							else
+								if (msg.arg1 == 0)
+								{
+									Toast.makeText(activity, "Downloading " + file.getName() + " : canceled", Toast.LENGTH_SHORT).show();
+								}
+
+						} catch (CloudAppException e)
 						{
 							e.printStackTrace();
 						}
 
-					break;
+						break;
 
 					case Constant.HANDLER_ACTION_SHARE:
 
@@ -864,7 +849,7 @@ public class FileDetailsFragment extends Fragment
 						else
 							Toast.makeText(activity, "Copying link to clipboard : error", Toast.LENGTH_SHORT).show();
 
-					break;
+						break;
 
 					case Constant.HANDLER_ACTION_PICTURE_LOADED:
 
@@ -887,7 +872,7 @@ public class FileDetailsFragment extends Fragment
 							imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_nopreview3));
 						}
 
-					break;
+						break;
 				}
 			}
 		};

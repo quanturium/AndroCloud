@@ -39,8 +39,7 @@ public class Cache
 
 				output.close();
 
-			}
-			catch (IOException e)
+			} catch (IOException e)
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -69,13 +68,11 @@ public class Cache
 					input.close();
 					input = null;
 
-				}
-				catch (FileNotFoundException e)
+				} catch (FileNotFoundException e)
 				{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
-				catch (IOException e)
+				} catch (IOException e)
 				{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -111,8 +108,7 @@ public class Cache
 
 				output.close();
 
-			}
-			catch (IOException e)
+			} catch (IOException e)
 			{
 				e.printStackTrace();
 			}
@@ -145,13 +141,11 @@ public class Cache
 
 					input.close();
 
-				}
-				catch (FileNotFoundException e)
+				} catch (FileNotFoundException e)
 				{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				}
-				catch (IOException e)
+				} catch (IOException e)
 				{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -235,11 +229,12 @@ public class Cache
 
 		if (Environment.MEDIA_MOUNTED.equals(state))
 			mExternalStorageAvailable = true;
-		else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state))
-			mExternalStorageAvailable = true;
-
 		else
-			mExternalStorageAvailable = false;
+			if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state))
+				mExternalStorageAvailable = true;
+
+			else
+				mExternalStorageAvailable = false;
 
 		return mExternalStorageAvailable;
 	}
@@ -252,10 +247,11 @@ public class Cache
 
 		if (Environment.MEDIA_MOUNTED.equals(state))
 			mExternalStorageWriteable = true;
-		else if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state))
-			mExternalStorageWriteable = false;
 		else
-			mExternalStorageWriteable = false;
+			if (Environment.MEDIA_MOUNTED_READ_ONLY.equals(state))
+				mExternalStorageWriteable = false;
+			else
+				mExternalStorageWriteable = false;
 
 		return mExternalStorageWriteable;
 	}

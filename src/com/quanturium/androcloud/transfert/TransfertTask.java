@@ -1,7 +1,5 @@
 package com.quanturium.androcloud.transfert;
 
-import java.io.IOException;
-
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -9,13 +7,13 @@ import android.widget.Toast;
 
 public abstract class TransfertTask extends AsyncTask<String, Integer, Object>
 {
-	protected Activity					context			= null;
-	protected String				fileName		= "n/a";
-	protected TransfertNotification	notification	= null;
-	protected int					id				= -1;
-	protected long					totalSize		= 0;
-	protected boolean showNotification = true;
-	protected String error = null;
+	protected Activity				context				= null;
+	protected String				fileName			= "n/a";
+	protected TransfertNotification	notification		= null;
+	protected int					id					= -1;
+	protected long					totalSize			= 0;
+	protected boolean				showNotification	= true;
+	protected String				error				= null;
 
 	public TransfertTask(Activity a)
 	{
@@ -26,8 +24,9 @@ public abstract class TransfertTask extends AsyncTask<String, Integer, Object>
 	{
 		this.id = id;
 	}
-	
+
 	public abstract int getTypeAction();
+
 	public abstract String getStringAction();
 
 	@Override
@@ -35,8 +34,8 @@ public abstract class TransfertTask extends AsyncTask<String, Integer, Object>
 	{
 		Log.i("Task new", "onPreExecute");
 		Toast.makeText(this.context, getStringAction() + " started", Toast.LENGTH_SHORT).show();
-		
-		if(showNotification)
+
+		if (showNotification)
 			notification = new TransfertNotification(this, fileName);
 	}
 
@@ -58,8 +57,8 @@ public abstract class TransfertTask extends AsyncTask<String, Integer, Object>
 	protected void onProgressUpdate(Integer... values)
 	{
 		Log.i("Task #" + this.id, "onProgressUpdate : " + values[0]);
-		
-		if(showNotification)
+
+		if (showNotification)
 			notification.update(values[0]);
 	}
 
@@ -67,8 +66,8 @@ public abstract class TransfertTask extends AsyncTask<String, Integer, Object>
 	protected void onPostExecute(Object result)
 	{
 		Log.i("Task #" + this.id, "onPostExecute");
-		
-		if(showNotification)
+
+		if (showNotification)
 			notification.finish(result);
 	}
 
@@ -76,11 +75,11 @@ public abstract class TransfertTask extends AsyncTask<String, Integer, Object>
 	protected void onCancelled()
 	{
 		Log.i("Task #" + this.id, "onCancelled");
-		
+
 		TransfertTasksStorage.getInstance().removeTask(this);
-		
-		if(showNotification)
+
+		if (showNotification)
 			notification.cancel(error);
-		
+
 	}
 }

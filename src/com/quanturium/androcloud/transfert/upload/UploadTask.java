@@ -44,7 +44,7 @@ public class UploadTask extends TransfertTask
 			error = e.getMessage();
 			cancel(true);
 		}
-		catch (InterruptedException e) // interrompu par l'utilisateur, rien a faire ici
+		catch (InterruptedException e) // Interrupted by the user, nothing to do here
 		{
 //			e.printStackTrace();
 		}

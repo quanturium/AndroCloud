@@ -160,101 +160,101 @@ public class FilesAdapter extends BaseAdapter implements Filterable
 
 			return v;
 		}
-		else if (displayItems.get(position).getDisplayType() == DisplayType.VISIBLE)
-		{
-			View v = convertView;
-			ItemViewHolder itemViewHolder;
-
-			if (v == null)
+		else
+			if (displayItems.get(position).getDisplayType() == DisplayType.VISIBLE)
 			{
-				itemViewHolder = new ItemViewHolder();
-				v = inflater.inflate(R.layout.file_item, null);
-				itemViewHolder.title = (TextView) v.findViewById(R.id.fileItemTitle);
-				itemViewHolder.date = (TextView) v.findViewById(R.id.fileItemDate);
-				itemViewHolder.count = (TextView) v.findViewById(R.id.fileItemCount);
-				itemViewHolder.icon = (ImageView) v.findViewById(R.id.fileItemIcon);
-				itemViewHolder.checkbox = (CheckBox) v.findViewById(R.id.fileItemCheckbox);
-				itemViewHolder.layout = (LinearLayout) v.findViewById(R.id.fileItem);
-				v.setTag(itemViewHolder);
+				View v = convertView;
+				ItemViewHolder itemViewHolder;
+
+				if (v == null)
+				{
+					itemViewHolder = new ItemViewHolder();
+					v = inflater.inflate(R.layout.file_item, null);
+					itemViewHolder.title = (TextView) v.findViewById(R.id.fileItemTitle);
+					itemViewHolder.date = (TextView) v.findViewById(R.id.fileItemDate);
+					itemViewHolder.count = (TextView) v.findViewById(R.id.fileItemCount);
+					itemViewHolder.icon = (ImageView) v.findViewById(R.id.fileItemIcon);
+					itemViewHolder.checkbox = (CheckBox) v.findViewById(R.id.fileItemCheckbox);
+					itemViewHolder.layout = (LinearLayout) v.findViewById(R.id.fileItem);
+					v.setTag(itemViewHolder);
+				}
+				else
+				{
+					itemViewHolder = (ItemViewHolder) v.getTag();
+				}
+
+				try
+				{
+
+					itemViewHolder.title.setText(displayItems.get(position).getName());
+					itemViewHolder.count.setText(displayItems.get(position).getViewCounter() + "");
+					itemViewHolder.date.setText(displayItems.get(position).getUpdatedAt().toLocaleString());
+
+					if (this.multiSelectMode)
+					{
+						itemViewHolder.checkbox.setVisibility(View.VISIBLE);
+					}
+					else
+					{
+						itemViewHolder.checkbox.setVisibility(View.GONE);
+					}
+
+					if (displayItems.get(position).isChecked())
+					{
+						itemViewHolder.layout.setBackgroundResource(android.R.color.holo_blue_light);
+						itemViewHolder.checkbox.setChecked(true);
+					}
+					else
+					{
+						itemViewHolder.layout.setBackgroundResource(android.R.color.transparent);
+						itemViewHolder.checkbox.setChecked(false);
+					}
+
+					switch (displayItems.get(position).getItemType())
+					{
+
+						case AUDIO:
+							itemViewHolder.icon.setImageResource(R.drawable.ic_itemtype_audio);
+							break;
+
+						case BOOKMARK:
+							itemViewHolder.icon.setImageResource(R.drawable.ic_itemtype_bookmark);
+							break;
+
+						case IMAGE:
+							itemViewHolder.icon.setImageResource(R.drawable.ic_itemtype_image);
+							break;
+
+						case VIDEO:
+							itemViewHolder.icon.setImageResource(R.drawable.ic_itemtype_video);
+							break;
+
+						case TEXT:
+							itemViewHolder.icon.setImageResource(R.drawable.ic_itemtype_text);
+							break;
+
+						case ARCHIVE:
+							itemViewHolder.icon.setImageResource(R.drawable.ic_itemtype_archive);
+							break;
+
+						case UNKNOWN:
+						default:
+							itemViewHolder.icon.setImageResource(R.drawable.ic_itemtype_unknown);
+							break;
+					}
+
+				} catch (CloudAppException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+				return v;
 			}
 			else
 			{
-				itemViewHolder = (ItemViewHolder) v.getTag();
+				return convertView;
 			}
-
-			try
-			{
-
-				itemViewHolder.title.setText(displayItems.get(position).getName());
-				itemViewHolder.count.setText(displayItems.get(position).getViewCounter() + "");
-				itemViewHolder.date.setText(displayItems.get(position).getUpdatedAt().toLocaleString());
-
-				if (this.multiSelectMode)
-				{
-					itemViewHolder.checkbox.setVisibility(View.VISIBLE);
-				}
-				else
-				{
-					itemViewHolder.checkbox.setVisibility(View.GONE);
-				}
-
-				if (displayItems.get(position).isChecked())
-				{
-					itemViewHolder.layout.setBackgroundResource(android.R.color.holo_blue_light);
-					itemViewHolder.checkbox.setChecked(true);
-				}
-				else
-				{
-					itemViewHolder.layout.setBackgroundResource(android.R.color.transparent);
-					itemViewHolder.checkbox.setChecked(false);
-				}
-
-				switch (displayItems.get(position).getItemType())
-				{
-
-					case AUDIO:
-						itemViewHolder.icon.setImageResource(R.drawable.ic_itemtype_audio);
-					break;
-
-					case BOOKMARK:
-						itemViewHolder.icon.setImageResource(R.drawable.ic_itemtype_bookmark);
-					break;
-
-					case IMAGE:
-						itemViewHolder.icon.setImageResource(R.drawable.ic_itemtype_image);
-					break;
-
-					case VIDEO:
-						itemViewHolder.icon.setImageResource(R.drawable.ic_itemtype_video);
-					break;
-
-					case TEXT:
-						itemViewHolder.icon.setImageResource(R.drawable.ic_itemtype_text);
-					break;
-
-					case ARCHIVE:
-						itemViewHolder.icon.setImageResource(R.drawable.ic_itemtype_archive);
-					break;
-
-					case UNKNOWN:
-					default:
-						itemViewHolder.icon.setImageResource(R.drawable.ic_itemtype_unknown);
-					break;
-				}
-
-			}
-			catch (CloudAppException e)
-			{
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			return v;
-		}
-		else
-		{
-			return convertView;
-		}
 	}
 
 	@Override
@@ -266,7 +266,8 @@ public class FilesAdapter extends BaseAdapter implements Filterable
 
 		if (filter == null)
 		{
-			filter = new Filter() {
+			filter = new Filter()
+			{
 				@Override
 				protected void publishResults(CharSequence constraint, FilterResults results)
 				{
@@ -301,8 +302,7 @@ public class FilesAdapter extends BaseAdapter implements Filterable
 								{
 									tempFiles.add(item);
 								}
-							}
-							catch (CloudAppException e)
+							} catch (CloudAppException e)
 							{
 								// TODO Auto-generated catch block
 								e.printStackTrace();
