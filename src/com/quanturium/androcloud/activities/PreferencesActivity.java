@@ -2,6 +2,7 @@ package com.quanturium.androcloud.activities;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.OnSharedPreferenceChangeListener;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.preference.Preference;
 import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceManager;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.quanturium.androcloud.R;
@@ -43,6 +45,22 @@ public class PreferencesActivity extends PreferenceActivity implements OnSharedP
 
 		setSummaryUploadAction();
 		setSummaryDownloadAction();
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item)
+	{
+		switch (item.getItemId())
+		{
+			case android.R.id.home:
+				
+				Intent intent = new Intent(this, FilesActivity.class);
+	            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+	            startActivity(intent);
+				
+				return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override

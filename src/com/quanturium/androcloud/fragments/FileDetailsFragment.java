@@ -47,6 +47,7 @@ import com.cloudapp.api.model.CloudAppItem.Type;
 import com.cloudapp.impl.CloudAppImpl;
 import com.cloudapp.impl.model.CloudAppItemImpl;
 import com.quanturium.androcloud.R;
+import com.quanturium.androcloud.activities.FilesActivity;
 import com.quanturium.androcloud.listener.FilesDetailsFragmentListener;
 import com.quanturium.androcloud.tools.Cache;
 import com.quanturium.androcloud.tools.Constant;
@@ -144,7 +145,11 @@ public class FileDetailsFragment extends Fragment
 			case android.R.id.home:
 
 				if (!listener.isDualView())
-					activity.finish();
+				{
+					Intent intent = new Intent(getActivity(), FilesActivity.class);
+					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(intent);
+				}
 
 				break;
 
@@ -253,7 +258,7 @@ public class FileDetailsFragment extends Fragment
 		if (currentlyLoading)
 		{
 			int order = menu.findItem(currentlyAction).getOrder();
-			Log.i(TAG,"Order " + order + "");
+			Log.i(TAG, "Order " + order + "");
 			menu.add(Menu.NONE, Menu.NONE, order, "Loading").setActionView(R.layout.progress).setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM);
 			menu.removeItem(currentlyAction);
 		}
