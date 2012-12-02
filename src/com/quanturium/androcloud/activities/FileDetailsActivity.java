@@ -20,7 +20,7 @@ public class FileDetailsActivity extends Activity implements FilesDetailsFragmen
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
-		Log.i(TAG, "ativity : create " + this.toString());
+		Log.i(TAG, "activity created " + this.toString());
 
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);

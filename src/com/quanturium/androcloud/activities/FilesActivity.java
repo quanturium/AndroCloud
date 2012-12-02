@@ -23,7 +23,7 @@ public class FilesActivity extends Activity implements FilesFragmentListener, Fi
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
-		Log.i(TAG, "Mainativity : create " + this.toString());
+		Log.i(TAG, "activity created " + this.toString());
 
 		super.onCreate(savedInstanceState);
 

@@ -30,7 +30,6 @@ public class FilesAdapter extends BaseAdapter implements Filterable
 	private LayoutInflater		inflater;
 	public boolean				lastItemLoading	= false;
 	private Filter				filter;
-	private boolean				multiSelectMode	= false;
 	
 	private final static String	TAG	= "FilesAdapter";
 
@@ -68,7 +67,7 @@ public class FilesAdapter extends BaseAdapter implements Filterable
 	@Override
 	public boolean isEnabled(int position)
 	{
-		return !(this.displayItems.get(position).getDisplayType() == DisplayType.LOAD_MORE && multiSelectMode);
+		return true;
 	}
 
 	@Override
@@ -107,19 +106,6 @@ public class FilesAdapter extends BaseAdapter implements Filterable
 	{
 		this.displayItems.clear();
 		notifyDataSetChanged();
-	}
-
-	public void startMultiSelectMode()
-	{
-		this.multiSelectMode = true;
-	}
-
-	public void cancelMultiSelectMode()
-	{
-		for (CloudAppItem file : displayItems)
-			file.setChecked(false);
-
-		this.multiSelectMode = false;
 	}
 
 	@Override
@@ -176,7 +162,6 @@ public class FilesAdapter extends BaseAdapter implements Filterable
 					itemViewHolder.date = (TextView) v.findViewById(R.id.fileItemDate);
 					itemViewHolder.count = (TextView) v.findViewById(R.id.fileItemCount);
 					itemViewHolder.icon = (ImageView) v.findViewById(R.id.fileItemIcon);
-					itemViewHolder.checkbox = (CheckBox) v.findViewById(R.id.fileItemCheckbox);
 					itemViewHolder.layout = (LinearLayout) v.findViewById(R.id.fileItem);
 					v.setTag(itemViewHolder);
 				}
@@ -192,25 +177,17 @@ public class FilesAdapter extends BaseAdapter implements Filterable
 					itemViewHolder.count.setText(displayItems.get(position).getViewCounter() + "");
 					itemViewHolder.date.setText(displayItems.get(position).getUpdatedAt().toLocaleString());
 
-					if (this.multiSelectMode)
-					{
-						itemViewHolder.checkbox.setVisibility(View.VISIBLE);
-					}
-					else
-					{
-						itemViewHolder.checkbox.setVisibility(View.GONE);
-					}
-
-					if (displayItems.get(position).isChecked())
-					{
-						itemViewHolder.layout.setBackgroundResource(android.R.color.holo_blue_light);
-						itemViewHolder.checkbox.setChecked(true);
-					}
-					else
-					{
-						itemViewHolder.layout.setBackgroundResource(android.R.color.transparent);
-						itemViewHolder.checkbox.setChecked(false);
-					}
+//					if (displayItems.get(position).isChecked())
+//					{
+////						itemViewHolder.layout.setBackgroundResource(android.R.color.holo_blue_light);
+//						itemViewHolder.layout.setBackgroundResource(android.R.color.transparent);
+//						itemViewHolder.checkbox.setChecked(true);
+//					}
+//					else
+//					{
+//						itemViewHolder.layout.setBackgroundResource(android.R.color.transparent);
+//						itemViewHolder.checkbox.setChecked(false);
+//					}
 
 					switch (displayItems.get(position).getItemType())
 					{
@@ -313,7 +290,7 @@ public class FilesAdapter extends BaseAdapter implements Filterable
 					tempFiles.add(files.get(files.size() - 1));
 
 					FilterResults newFilterResults = new FilterResults();
-					Log.i("items", tempFiles.size() + "");
+					Log.i(TAG, "items" + tempFiles.size() + "");
 					newFilterResults.count = tempFiles.size();
 					newFilterResults.values = tempFiles;
 					return newFilterResults;

@@ -14,16 +14,20 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
 import android.widget.Toast;
 
 import com.cloudapp.api.CloudApp;
@@ -39,7 +43,7 @@ import com.quanturium.androcloud.listener.FilesFragmentListener;
 import com.quanturium.androcloud.tools.Constant;
 import com.quanturium.androcloud.tools.Prefs;
 
-public class FilesFragment extends Fragment implements OnItemClickListener// , MultiChoiceModeListener, OnQueryTextListener
+public class FilesFragment extends Fragment implements OnItemClickListener, MultiChoiceModeListener, OnQueryTextListener
 {
 	private boolean					isNew				= true;
 	private Activity				activity;
@@ -227,13 +231,13 @@ public class FilesFragment extends Fragment implements OnItemClickListener// , M
 		if (!currentlyLoading)
 			showProgressIcon(false);
 
-		// SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
-		// searchView.setIconifiedByDefault(false);
-		// searchView.setOnQueryTextListener(this);
-		// searchView.setSubmitButtonEnabled(false);
-		// searchView.setQueryHint("Filter files");
-		// searchView.setFocusable(false);
-		// searchView.setFocusableInTouchMode(false);
+		 SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+		 searchView.setIconifiedByDefault(false);
+		 searchView.setOnQueryTextListener(this);
+		 searchView.setSubmitButtonEnabled(false);
+		 searchView.setQueryHint("Filter files");
+		 searchView.setFocusable(false);
+		 searchView.setFocusableInTouchMode(false);
 
 		super.onCreateOptionsMenu(menu, inflater);
 	}
@@ -250,7 +254,7 @@ public class FilesFragment extends Fragment implements OnItemClickListener// , M
 		listView.setEmptyView(emptyView);
 		listView.setTextFilterEnabled(true);
 		listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-		// listView.setMultiChoiceModeListener(this);
+		listView.setMultiChoiceModeListener(this);
 
 		filesAdapter = new FilesAdapter(activity, this.files);
 		listView.setAdapter(filesAdapter);
@@ -542,83 +546,85 @@ public class FilesFragment extends Fragment implements OnItemClickListener// , M
 		return this.handler;
 	}
 
-	// @Override
-	// public boolean onActionItemClicked(ActionMode mode, MenuItem item)
-	// {
-	// long[] checkedItems;
-	//
-	// switch (item.getItemId())
-	// {
-	// case R.id.multiItemSave:
-	//
-	// checkedItems = listView.getCheckedItemIds();
-	// Toast.makeText(activity, "multi save", Toast.LENGTH_SHORT).show();
-	//
-	// break;
-	//
-	// case R.id.multiItemDelete:
-	//
-	// checkedItems = listView.getCheckedItemIds();
-	// Toast.makeText(activity, "multi delete", Toast.LENGTH_SHORT).show();
-	// listView.setItemChecked(0, false);
-	//
-	// break;
-	// }
-	//
-	// return true;
-	// }
+	@Override
+	public boolean onActionItemClicked(ActionMode mode, MenuItem item)
+	{
+		long[] checkedItems;
 
-	// @Override
-	// public boolean onCreateActionMode(ActionMode mode, Menu menu)
-	// {
-	// MenuInflater inflater = activity.getMenuInflater();
-	// inflater.inflate(R.menu.action_select, menu);
-	//
-	// mode.setTitle("Select Items");
-	//
-	// return true;
-	// }
-	//
-	// @Override
-	// public void onDestroyActionMode(ActionMode mode)
-	// {
-	// this.filesAdapter.cancelMultiSelectMode();
-	// }
-	//
-	// @Override
-	// public boolean onPrepareActionMode(ActionMode mode, Menu menu)
-	// {
-	// this.filesAdapter.startMultiSelectMode();
-	// return true;
-	// }
-	//
-	// @Override
-	// public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked)
-	// {
-	// ((CloudAppItem) this.filesAdapter.getItem(position)).setChecked(checked);
-	//
-	// int checkedCount = listView.getCheckedItemCount();
-	//
-	// mode.setSubtitle("" + checkedCount + " item(s) selected");
-	// }
-	//
-	// @Override
-	// public boolean onQueryTextChange(String newText)
-	// {
-	// if (filesAdapter != null && newText != null && files.size() > 0)
-	// {
-	// filesAdapter.getFilter().filter(newText);
-	// return true;
-	// }
-	// else
-	// {
-	// return false;
-	// }
-	// }
-	//
-	// @Override
-	// public boolean onQueryTextSubmit(String query)
-	// {
-	// return false;
-	// }
+		switch (item.getItemId())
+		{
+			case R.id.multiItemSave:
+
+				checkedItems = listView.getCheckedItemIds();
+				Toast.makeText(activity, "multi save", Toast.LENGTH_SHORT).show();				
+
+				break;
+
+			case R.id.multiItemDelete:
+
+				checkedItems = listView.getCheckedItemIds();
+				Toast.makeText(activity, "multi delete", Toast.LENGTH_SHORT).show();
+				listView.setItemChecked(0, false);
+
+				break;
+		}
+		
+		mode.finish();
+
+		return true;
+	}
+
+	@Override
+	public boolean onCreateActionMode(ActionMode mode, Menu menu)
+	{
+		MenuInflater inflater = activity.getMenuInflater();
+		inflater.inflate(R.menu.action_select, menu);
+
+		mode.setTitle("Select Items");
+
+		return true;
+	}
+
+	@Override
+	public void onDestroyActionMode(ActionMode mode)
+	{
+//		this.filesAdapter.cancelMultiSelectMode();
+	}
+
+	@Override
+	public boolean onPrepareActionMode(ActionMode mode, Menu menu)
+	{
+//		this.filesAdapter.startMultiSelectMode();
+		return true;
+	}
+
+	@Override
+	public void onItemCheckedStateChanged(ActionMode mode, int position, long id, boolean checked)
+	{
+		((CloudAppItem) this.filesAdapter.getItem(position)).setChecked(checked);
+
+		int checkedCount = listView.getCheckedItemCount();
+
+		mode.setSubtitle("" + checkedCount + " item(s) selected");
+	}
+
+	@Override
+	public boolean onQueryTextChange(String newText)
+	{
+		if (filesAdapter != null && newText != null && files.size() > 0)
+		{
+			filesAdapter.getFilter().filter(newText);
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
+
+	@Override
+	public boolean onQueryTextSubmit(String query)
+	{
+		return false;
+	}
 }
