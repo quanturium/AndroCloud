@@ -25,6 +25,7 @@ public class PreferencesActivity extends PreferenceActivity implements OnSharedP
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
+		getActionBar().setHomeButtonEnabled(true);
 		addPreferencesFromResource(R.xml.preferences);
 
 		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
