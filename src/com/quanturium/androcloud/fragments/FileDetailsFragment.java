@@ -254,6 +254,14 @@ public class FileDetailsFragment extends Fragment
 	@Override
 	public void onCreateOptionsMenu(Menu menu, MenuInflater inflater)
 	{
+		if(activity instanceof FilesActivity)
+		{
+			if(!((FilesActivity)activity).isDualView2())
+			{
+				return;
+			}
+		}
+			
 		inflater.inflate(R.menu.file_activity, menu);
 
 		if (currentlyLoading)
