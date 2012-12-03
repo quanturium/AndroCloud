@@ -64,7 +64,7 @@ public class FilesFragment extends Fragment implements OnItemClickListener, Mult
 	public void onAttach(Activity activity)
 	{
 
-		Log.i(TAG, "Mainfragment : attach to " + activity.toString());
+		Log.i(TAG, "Attached : " + this.toString() + " to " + activity.toString());
 
 		super.onAttach(activity);
 		try
@@ -78,7 +78,7 @@ public class FilesFragment extends Fragment implements OnItemClickListener, Mult
 
 	public void onCreate(Bundle savedInstanceState)
 	{
-		Log.i(TAG, "Mainfragment : create");
+		Log.i(TAG, "Created : " + this.toString());
 
 		super.onCreate(savedInstanceState);
 		setHasOptionsMenu(true);
@@ -90,7 +90,7 @@ public class FilesFragment extends Fragment implements OnItemClickListener, Mult
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
 	{
-		Log.i(TAG, "Mainfragment : create view");
+		Log.i(TAG, "View created : " + this.toString());
 
 		View mainView = inflater.inflate(R.layout.main, container, false);
 		return mainView;
@@ -99,7 +99,7 @@ public class FilesFragment extends Fragment implements OnItemClickListener, Mult
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState)
 	{
-		Log.i(TAG, "Mainfragment : activity created");
+		Log.i(TAG, "Activity created : " + this.toString());
 
 		super.onActivityCreated(savedInstanceState);
 

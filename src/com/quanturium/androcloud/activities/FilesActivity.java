@@ -49,7 +49,7 @@ public class FilesActivity extends Activity implements FilesFragmentListener, Fi
 			newFragment.setArguments(a);
 
 			FragmentTransaction transaction = getFragmentManager().beginTransaction();
-			transaction.replace(R.id.fileDetailsFragment, newFragment);
+			transaction.replace(R.id.fileDetailsFragment, newFragment, "detailsFragment");
 			transaction.addToBackStack(null);
 
 			// Commit the transaction
@@ -93,7 +93,7 @@ public class FilesActivity extends Activity implements FilesFragmentListener, Fi
 		return true;
 	}
 	
-	public boolean isDualView2() // uniquement a utiliser dans FileFragment
+	public boolean isDualView2() // to use only in filesFragment
 	{
 		return findViewById(R.id.fileDetailsFragment) != null ? true : false; 
 	}
