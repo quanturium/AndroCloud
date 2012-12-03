@@ -3,7 +3,7 @@
     android:orientation="horizontal"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-    <fragment class="com.quanturium.androcloud.FilesFragment"
+    <fragment class="com.quanturium.androcloud.fragments.FilesFragment"
             android:id="@+id/filesFragment" android:layout_weight="1"
             android:layout_width="100dp" android:layout_height="match_parent" />
 
