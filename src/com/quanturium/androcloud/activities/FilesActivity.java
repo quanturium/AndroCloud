@@ -43,6 +43,7 @@ public class FilesActivity extends Activity implements FilesFragmentListener, Fi
 		{
 			FileDetailsFragment newFragment = new FileDetailsFragment();
 
+			
 			Bundle a = new Bundle();
 			a.putString("json", file.toString());
 
@@ -84,7 +85,6 @@ public class FilesActivity extends Activity implements FilesFragmentListener, Fi
 				}
 			}
 		}
-
 	}
 
 	@Override

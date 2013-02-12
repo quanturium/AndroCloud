@@ -37,6 +37,7 @@ import com.cloudapp.impl.CloudAppImpl;
 import com.cloudapp.impl.model.CloudAppItemImpl;
 import com.cloudapp.impl.model.DisplayType;
 import com.quanturium.androcloud.R;
+import com.quanturium.androcloud.activities.AboutActivity;
 import com.quanturium.androcloud.activities.PreferencesActivity;
 import com.quanturium.androcloud.adapters.FilesAdapter;
 import com.quanturium.androcloud.listener.FilesFragmentListener;
@@ -166,6 +167,12 @@ public class FilesFragment extends Fragment implements OnItemClickListener, Mult
 				loadFiles(true, 0);
 
 				break;
+				
+			case R.id.menuItemAbout :
+				
+				startActivity(new Intent(getActivity(), AboutActivity.class));
+				
+				break;
 		}
 
 		return false;
@@ -179,7 +186,7 @@ public class FilesFragment extends Fragment implements OnItemClickListener, Mult
 	private void firstRun()
 	{
 		AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-		builder.setMessage("First run");
+		builder.setMessage(R.string.first_run);
 		builder.setCancelable(false);
 		builder.setPositiveButton("ok", new DialogInterface.OnClickListener()
 		{
@@ -258,9 +265,6 @@ public class FilesFragment extends Fragment implements OnItemClickListener, Mult
 
 		filesAdapter = new FilesAdapter(activity, this.files);
 		listView.setAdapter(filesAdapter);
-
-		if (android.os.Build.VERSION.SDK_INT < 11) // TODO : check if 11 is right
-			registerForContextMenu(listView);
 	}
 
 	private void loadItems()
@@ -557,14 +561,14 @@ public class FilesFragment extends Fragment implements OnItemClickListener, Mult
 			case R.id.multiItemSave:
 
 				checkedItems = listView.getCheckedItemIds();
-				Toast.makeText(activity, "multi save", Toast.LENGTH_SHORT).show();				
+				Toast.makeText(activity, "To be implemented", Toast.LENGTH_SHORT).show();				
 
 				break;
 
 			case R.id.multiItemDelete:
 
 				checkedItems = listView.getCheckedItemIds();
-				Toast.makeText(activity, "multi delete", Toast.LENGTH_SHORT).show();
+				Toast.makeText(activity, "To be implemented", Toast.LENGTH_SHORT).show();
 				listView.setItemChecked(0, false);
 
 				break;

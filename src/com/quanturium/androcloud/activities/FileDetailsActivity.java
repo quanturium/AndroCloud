@@ -1,6 +1,7 @@
 package com.quanturium.androcloud.activities;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -20,17 +21,14 @@ public class FileDetailsActivity extends Activity implements FilesDetailsFragmen
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
-		Log.i(TAG, "activity created " + this.toString());
+		Log.i(TAG, "Created : " + this.toString());
 
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 
 		Configuration config = getResources().getConfiguration();
 		
-		int smallestScreenWidthDp = 0;
-		
-		if(android.os.Build.VERSION.SDK_INT >= 11)
-			smallestScreenWidthDp = config.smallestScreenWidthDp;
+		int smallestScreenWidthDp = config.smallestScreenWidthDp;
 
 		if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE && smallestScreenWidthDp >= 600)
 		{
@@ -43,9 +41,12 @@ public class FileDetailsActivity extends Activity implements FilesDetailsFragmen
 			setContentView(R.layout.fragment_layout2);
 
 			// During initial setup, plug in the details fragment.
-			FileDetailsFragment details = new FileDetailsFragment();
+			FileDetailsFragment details = new FileDetailsFragment();			
 			details.setArguments(getIntent().getExtras());
-			getFragmentManager().beginTransaction().add(R.id.fileDetailsFragment, details).commit();
+			
+			FragmentTransaction transaction = getFragmentManager().beginTransaction();
+			transaction.add(R.id.fileDetailsFragment, details, "detailsFragment");
+			transaction.commit();
 		}
 		else
 		{

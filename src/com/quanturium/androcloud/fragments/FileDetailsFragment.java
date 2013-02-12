@@ -147,9 +147,7 @@ public class FileDetailsFragment extends Fragment
 
 				if (!listener.isDualView())
 				{
-					Intent intent = new Intent(getActivity(), FilesActivity.class);
-					intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					startActivity(intent);
+					activity.finish();
 				}
 
 				break;
@@ -339,10 +337,7 @@ public class FileDetailsFragment extends Fragment
 				e.printStackTrace();
 			}
 
-			if (android.os.Build.VERSION.SDK_INT >= 14)
-			{
-				actionBar.setIcon(ressource);
-			}
+			actionBar.setIcon(ressource);	
 
 			try
 			{

@@ -76,11 +76,7 @@ public class UploadActivity extends Activity
 
 						Log.i(TAG, "Sharing file's path : " + file.toString());
 						TransfertTask task = new UploadTask(this, file);
-
-						if (android.os.Build.VERSION.SDK_INT < 11)
-							task.execute("test");
-						else
-							task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "test");
+						task.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, "test");
 					}
 				}
 			}

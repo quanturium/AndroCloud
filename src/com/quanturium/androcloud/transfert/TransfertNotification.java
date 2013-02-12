@@ -9,7 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.util.Log;
+import android.support.v4.app.NotificationCompat;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.RemoteViews;
@@ -72,66 +72,32 @@ public class TransfertNotification
 		notification.contentView.setViewVisibility(R.id.CancelLayout, View.GONE);
 		notification.contentView.setTextViewText(R.id.DescriptionText, getDescription());
 		notification.contentIntent = notificationPendingIntent;
-
-		if (android.os.Build.VERSION.SDK_INT < 11)
-		{
-			notification.contentView.setImageViewResource(R.id.iconImage, R.drawable.ic_stat_transfert_finished);
-		}
-		else
-		{
-			if (android.os.Build.VERSION.SDK_INT >= 14)
-			{
-				notification.largeIcon = BitmapFactory.decodeResource(transfertTask.context.getResources(), R.drawable.ic_stat_transfert_finished);
-			}
-		}
+		notification.largeIcon = BitmapFactory.decodeResource(transfertTask.context.getResources(), R.drawable.ic_stat_transfert_finished);
 
 		notificationManager.notify(this.notificationId, notification);
 	}
 
-	private Notification buildNotification(int id, Context context, String title, String text_ticker, int icon_ticker, int icon_uploading)
+	private Notification buildNotification(int id, Context context, String title, String text_ticker, int icon_ticker, int icon_transfert)
 	{
-		if (android.os.Build.VERSION.SDK_INT < 11)
-		{
-			RemoteViews contentView = new RemoteViews(context.getPackageName(), R.layout.upload_notification);
-			contentView.setOnClickPendingIntent(R.id.CancelButton, buildPendingIntent(id, context, CANCEL_BROADCAST_ACTION, TransfertEventsReceiver.class));
-			contentView.setTextViewText(R.id.TitleText, title);
+		
+		RemoteViews contentView = new RemoteViews(context.getPackageName(), R.layout.transfert_notification);
+		contentView.setOnClickPendingIntent(R.id.CancelButton, buildPendingIntent(id, context, CANCEL_BROADCAST_ACTION, TransfertEventsReceiver.class));
+		contentView.setImageViewResource(R.id.iconImage, icon_transfert);
+		contentView.setTextViewText(R.id.TitleText, title);
+		
+		NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+		
+		builder.setTicker(text_ticker);
+		builder.setSmallIcon(icon_ticker);
 
-			Notification notification = new Notification(icon_ticker, title, System.currentTimeMillis());
+		builder.setOngoing(true);
+		builder.setAutoCancel(false);
+		builder.setOnlyAlertOnce(true);
+		builder.setContent(contentView);
 
-			notification.setLatestEventInfo(context, title, text_ticker, null);
-			notification.contentView = contentView;
-			notification.flags = Notification.FLAG_ONGOING_EVENT | Notification.FLAG_NO_CLEAR | Notification.FLAG_ONLY_ALERT_ONCE;
-
-			return notification;
-		}
-		else
-		{
-			RemoteViews contentView = new RemoteViews(context.getPackageName(), R.layout.upload_notification);
-			contentView.setOnClickPendingIntent(R.id.CancelButton, buildPendingIntent(id, context, CANCEL_BROADCAST_ACTION, TransfertEventsReceiver.class));
-			contentView.setViewVisibility(R.id.iconLayout, View.GONE);
-			contentView.setTextViewText(R.id.TitleText, title);
-
-			Notification.Builder builder = new Notification.Builder(context);
-
-			builder.setTicker(text_ticker);
-			builder.setSmallIcon(icon_ticker);
-
-			// builder.setLargeIcon(Bitmap.createScaledBitmap(BitmapFactory.decodeResource(context.getResources(), icon_uploading), context.getResources().getDimensionPixelSize(android.R.dimen.notification_large_icon_width), context.getResources().getDimensionPixelSize(android.R.dimen.notification_large_icon_height), false));
-
-			if (android.os.Build.VERSION.SDK_INT >= 14)
-			{
-				builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), icon_uploading));
-			}
-
-			builder.setOngoing(true);
-			builder.setAutoCancel(false);
-			builder.setOnlyAlertOnce(true);
-			builder.setContent(contentView);
-
-			Notification notification = builder.getNotification();
-
-			return notification;
-		}
+		Notification notification = builder.build();
+				
+		return notification;
 	}
 
 	private PendingIntent buildPendingIntent(int id, Context context, String action, Class<?> cls)

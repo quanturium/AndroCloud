@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:id="@+id/menuItemPreferences" android:title="Preferences"></item>
+    <item android:id="@+id/menuItemPreferences" android:showAsAction="collapseActionView" android:title="Preferences"></item>
+    <item android:id="@+id/menuItemAbout" android:showAsAction="collapseActionView" android:title="About"></item>
     <item android:id="@+id/menu_search"
           android:title="Search"
           android:icon="@drawable/ic_menu_search"
@@ -13,6 +14,7 @@
           android:visible="false" />
     <item android:id="@+id/menuItemProgress"
           android:actionLayout="@layout/progress"
+          android:title="Refreshing"
           android:showAsAction="always"
           android:clickable="true"         
           android:visible="true" />
